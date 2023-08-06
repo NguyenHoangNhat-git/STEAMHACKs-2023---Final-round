@@ -1,0 +1,102 @@
+{% extends 'base_user.html' %}
+
+{% load static %}
+
+{% load i18n %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/schedule.css' %}">
+{% endblock %}
+
+{% block navend %} 
+  <li class="nav-item custom-nav-item-pill">
+    <form action="/dashboard" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="nav-link active" 
+        style="-webkit-appearance: none; -moz-appearance: none; outline: none; border: none; background: none; font-weight: bold;">
+        Đăng xuất
+    </button>
+    </form>            
+  </li>
+{% endblock %}
+
+{% block content %}
+
+<div class="crumb-line">
+  <a class="custom-crumb" href="{% url 'dashboard' %}">
+    Cho người dùng >
+  </a>
+  <a class="custom-crumb" href="{% url 'schedule' %}">
+    Lịch trình
+  </a>
+</div>
+
+{% if error %}
+  <h1>{{Error}}</h1>
+{% endif %}
+
+<form method="POST" action="{% url 'schedule' %}" id="schedule-panel">
+  {% csrf_token %}
+  <div id="datetime-form">
+    <div id="date-form" style="text-align: center;">
+      {% for month in months %}
+        <div style="padding: 30px 0;">
+          <h2 style="text-indent: 60px; color: rgb(99,83,242); font-weight: bold;">Tháng {{ month.0.date.month }}, năm {{ month.0.date.year }}</h2>
+          {% with day_of_week=month. %}
+          {% endwith %}
+          <div class="custom-table">
+            <div class="custom-cell">CN</div>
+            <div class="custom-cell">HAI</div>
+            <div class="custom-cell">BA</div>
+            <div class="custom-cell">BỐN</div>
+            <div class="custom-cell">NĂM</div>
+            <div class="custom-cell">SÁU</div>
+            <div class="custom-cell">BẢY</div>
+            {% for day in month %}
+            <div class="custom-cell">
+              {% with day_str=day.date.day|stringformat:"s" month_str=day.date.month|stringformat:"s" year_str=day.date.year|stringformat:"s" %}
+                {% with day_str|add:"/"|add:month_str|add:"/"|add:year_str as unique_id %}
+                <input type="radio" id="{{unique_id}}" name="ngay" value="{{unique_id}}" required style="display: none;">
+                <label for="{{unique_id}}" class="day-of-month">{{day.date.day}}</label><br>
+                {% endwith %}
+              {% endwith %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div id="time-form">
+      <h2 style="color: rgb(99,83,242); text-align: center; font-size: 1.7rem; font-weight: bold;">Chọn thời điểm của buổi tư vấn</h2>
+      <br>
+      <input type="radio" id="9h" name="gio" value="9" required style="display: none;">
+      <label for="9h" class="custom-time-label">9h</label><br>
+      <input type="radio" id="11h" name="gio" value="11" style="display: none;">
+      <label for="11h" class="custom-time-label">11h</label><br>
+      <input type="radio" id="16h" name="gio" value="16" style="display: none;">
+      <label for="16h" class="custom-time-label">16h</label><br>
+      <input type="radio" id="20h" name="gio" value="20" style="display: none;">
+      <label for="20h" class="custom-time-label">20h</label><br>
+    </div>
+  </div>
+  
+  <div id="duration-form">
+    <h2 style="text-align: center; font-size: 1.7rem; font-weight: bold;">Thời gian buổi tư vấn</h2>
+    <br>
+    <input type="radio" id="30" name="bao_lau" value="30" required style="display: none;">
+    <label for="30" class="custom-time-label" style="width: 100%;">30 phút</label><br>
+    <input type="radio" id="45" name="bao_lau" value="45" style="display: none;">
+    <label for="45" class="custom-time-label" style="width: 100%;">45 phút</label><br>
+    <input type="radio" id="60" name="bao_lau" value="60" style="display: none;">
+    <label for="60" class="custom-time-label" style="width: 100%;">1 giờ</label><br>
+    <input type="radio" id="90" name="bao_lau" value="90" style="display: none;">
+    <label for="90" class="custom-time-label" style="width: 100%;">1,5 giờ</label><br>
+  </div>
+
+  <button type="submit" class="btn" 
+  style="position: absolute; bottom: 0; right: 0; margin: 20px; padding: 10px 20px; font-size: 2rem; color: white; font-weight: bold; background-color: rgb(87,93,173);">
+    Xác nhận
+  </button>
+</form>
+
+{% endblock %}

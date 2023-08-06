@@ -1,0 +1,55 @@
+body{
+    background-color: rgb(241,241,241);
+}
+
+.journal-frame{
+    background-color: white;
+    height: 700px;
+    padding: 20px 30px;
+
+    position: relative;
+
+    border-radius: 20px;
+
+    text-align: left;
+}
+.journal-frame p{
+    font-size: 1.4rem;
+}
+.journal-frame h3{
+    font-weight: bold;
+}
+
+#nhat-ki{
+    width: 100%;
+    height: 100%;
+
+    border: none;
+
+    padding: 20px 30px;
+
+    font-size: 1.4rem;
+    overflow: scroll;
+}
+textarea{
+    height: 90%;
+}
+
+#update-journal{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    
+    background-color: rgb(142,148,242);
+
+    border-radius: 0%;
+    border: none;
+
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+#update-journal:hover{
+    -webkit-box-shadow: 0 0 5px rgb(87,93,173);
+        box-shadow: 0 0 5px rgb(87,93,173);
+}

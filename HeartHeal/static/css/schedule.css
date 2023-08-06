@@ -1,0 +1,119 @@
+body{
+    background-color: rgb(241,241,241);
+}
+
+#schedule-panel{
+    background-color: white;
+    height: 800px;
+    width: 90%;
+    position: relative;
+
+    margin: 60px auto;
+    padding: 30px 40px;
+    border-radius: 20px;
+
+    display: flex;
+    justify-content: center;
+}
+#datetime-form{
+    height: 90%;
+    width: 70%;
+    background-color: rgb(249,244,255);
+
+    display: flex;
+}
+#date-form{
+    height: 95%;
+    width: 650px;
+    
+    overflow: scroll;
+}
+#time-form{
+    padding: 30px 40px;
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#time-form input[type='radio']:checked + .custom-time-label{
+    background-color: rgb(132,150,253);
+    cursor: pointer;
+    color: white;
+}
+.custom-time-label{
+    width: 200px;
+
+    margin: 5px 0;
+    padding: 20px 40px;
+
+    border-radius: 10px;
+    border: 2px solid rgb(216,194,255);
+
+    color: rgb(99,83,242);
+    font-size: 2.4rem;
+    text-align: center;
+}
+.custom-time-label:hover{
+    background-color: rgb(132,150,253);
+    cursor: pointer;
+    color: white;
+}
+#duration-form{
+    width: 30%;
+    height: 90%;
+
+    padding: 30px 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-table{
+    width: 100%;
+
+    margin-top: 30px;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+.day-of-month{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-cell, .custom-cell .day-of-month{
+    width: 90px;
+    height: 90px;
+
+    font-size: 1.8rem;
+    color: rgb(99,83,242);
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+}
+.day-of-month:hover{
+    background-color: rgb(99,83,242);
+    border-radius: 50%;
+
+    color: white;
+    
+    cursor: pointer;
+}
+
+.custom-table input[type='radio']:checked + .day-of-month{
+    background-color: rgb(99,83,242);
+    cursor: pointer;
+    color: white;
+    border-radius: 50%;
+}
+
+#duration-form input[type='radio']:checked + .custom-time-label{
+    background-color: rgb(132,150,253);
+    cursor: pointer;
+    color: white;
+}

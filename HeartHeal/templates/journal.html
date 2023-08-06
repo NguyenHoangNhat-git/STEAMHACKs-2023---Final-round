@@ -1,0 +1,89 @@
+{% extends 'base_user.html' %}
+
+{% load static %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/journal.css' %}">
+{% endblock %}
+
+{% block navend %} 
+  <li class="nav-item custom-nav-item-pill">
+    <form action="/dashboard" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="nav-link active" 
+        style="-webkit-appearance: none; -moz-appearance: none; outline: none; border: none; background: none; font-weight: bold;">
+        Đăng xuất
+    </button>
+    </form>            
+  </li>
+{% endblock %}
+
+{% block content %} 
+<div class="crumb-line">
+    <a class="custom-crumb" href="{% url 'dashboard' %}">
+        Cho người dùng >
+        </a>
+    <a class="custom-crumb" href="{% url 'journal' %}">
+        Nhật ký
+    </a>
+</div>
+
+<div class="row" style="min-height: 100vh; width: 100%; background-color: rgb(241,241,241); padding: 50px;">
+    <div class="col-4" style="text-align: center;">
+        <h1>Gợi ý chủ đề</h1>
+        <div class="journal-frame" style="overflow: scroll;">
+            <div>
+                <h3>Ghi chú việc xảy ra</h3>
+                <p>
+                     Ngày 11/8/2023<br>
+                    Tôi đã làm ...<br>
+                    Tôi đã xem phim ...<br>
+                    Tôi đi ăn cùng bạn bè ở ... <br>
+                </p>
+            </div>
+            <div>
+                <h3>Cảm nhận của bản thân</h3>
+                <p>
+                     Ngày 16/8/2023<br>
+                    Buổi sáng tôi cảm thấy rất mệt mỏi<br>
+                    Hôm nay tôi đã bỏ lỡ cơ hội hoàn thành ... tôi thấy rất tiếc<br>
+                    Tối hôm ấy tôi mệt nhưng không thể ngủ nổi<br>
+                </p>
+            </div>
+            <div>
+                <h3>Tự kể về bản thân</h3>
+                <p>
+                    5 điều làm tôi thấy biết ơn là ... <br>
+                    Sở thích của tôi là ...<br>
+                    Lần tôi cảm thấy tuyệt vọng nhất là khi<br>
+                    Lần tôi cảm thấy vui vẻ nhất là khi<br>
+                </p>
+            </div>
+            <div>
+                <h3>Nói về trải nghiệm của mình ở HeartHeal</h3>
+                <p>
+                    Lúc đầu được giới thiệu tới HeartHeal, tôi đã cảm thấy ... <br>
+                    Thế nhưng sau khi được ... tôi ... <br>
+                    Tôi tin rằng bản thân đã ... sau buổi hôm đó<br>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-8" style="text-align: center;">
+        <h1>Nhật kí của tôi</h1>
+        <form action="/journal" method="POST" class="journal-frame">
+            {% csrf_token %}
+            <div class="form-group custom-form-group" style="height: 92%;">
+                <textarea id="nhat-ki" type="text" name="content">{{journal.content}}</textarea>
+            </div>
+            <button id="update-journal" type="submit" class="btn btn-primary">Cập nhật nhật ký</button>
+        <form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %} 
+<script src="{% static 'js/chat.js' %}"></script>
+{% endblock %}

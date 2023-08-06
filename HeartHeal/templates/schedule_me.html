@@ -1,0 +1,54 @@
+{% extends 'base_user.html' %}
+
+{% load static %}
+
+{% load i18n %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/schedule_me.css' %}">
+{% endblock %}
+
+{% block navend %} 
+  <li class="nav-item custom-nav-item-pill">
+    <form action="/dashboard" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="nav-link active" 
+        style="-webkit-appearance: none; -moz-appearance: none; outline: none; border: none; background: none; font-weight: bold;">
+        Đăng xuất
+    </button>
+    </form>            
+  </li>
+{% endblock %}
+
+{% block content %}
+<div class="crumb-line">
+  <a class="custom-crumb" href="{% url 'dashboard' %}">
+    Cho người dùng >
+  </a>
+  <a class="custom-crumb" href="{% url 'schedule' %}">
+    Lịch trình >
+  </a>
+  <a class="custom-crumb" href="{% url 'schedule-me' %}">
+    Buổi tư vấn của tôi
+  </a>
+</div>
+
+<div id="meetings-frame">
+  {% for day in days %}
+    {% if day.meeting.link_meeting %}
+      <div class="meeting">
+        {{day.calendar.doctor.name}}
+        <!-- <h3>{{day.meeting.title}}</h3> -->
+        <p>{{day.date}}</p>
+        <p>Bắt đầu lúc : {{day.meeting.when}}h</p>
+        <p>Thời gian diễn ra: {{day.meeting.duration}}</p>
+        <a href="{{day.meeting.link_meeting}}" target="_blank">
+          <div style="padding: 10px 20px;">Tham gia</div>
+        </a>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+
+{% endblock %}

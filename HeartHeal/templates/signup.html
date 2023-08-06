@@ -1,0 +1,595 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+
+{% block navend %} 
+    <li class="nav-item custom-nav-item-pill">
+    <a class="nav-link active" href="{% url 'login' %}">Đăng Nhập</a>
+    </li>
+    <li class="nav-item custom-nav-item-pill">
+    <a class="nav-link active" href="{% url 'signup' %}">Bắt đầu</a>
+    </li>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4" style="text-align: center;">
+    <form action="/signup" method="POST">
+        {% csrf_token %}
+        <h1>
+            Cùng HeartHeal từng bước tìm ra chuyên gia tư vấn phù hợp dành cho bạn.
+        </h1>
+        <h4 style="color: rgb(62,64,149)">Bạn hãy lựa chọn câu trả lời phù hợp cho từng câu hỏi dưới đây để cung cấp thêm cho chúng tôi thông tin và vấn đề bạn đang gặp phải. Từ đó bạn có thể giúp chúng tôi tìm kiếm vị chuyên gia trị liệu phù hợp nhất dành cho bạn. 
+            <br>Ngoài ra, câu trả lời của bạn cũng giúp bác sĩ điều trị bước đầu hiểu về bạn</h4>
+
+        <div class="question-frame">
+            <h2>1. Đâu là loại hình liệu pháp điều trị bạn tìm kiếm?</h2>
+            <input type="radio" id="personal" name="lieu_phap" value="Cá nhân (dành cho tôi)" required>
+            <label for="personal" class="exam-radio">Cá nhân (dành cho tôi)</label><br>
+            <input type="radio" id="couple" name="lieu_phap" value="Cặp đôi (dành cho tôi và người đồng hành)">
+            <label for="couple" class="exam-radio">Cặp đôi (dành cho tôi và người đồng hành)</label><br>
+            <input type="radio" id="kid" name="lieu_phap" value="Trẻ nhỏ (dành cho con cái của tôi)">
+            <label for="kid" class="exam-radio">Trẻ nhỏ (dành cho con cái của tôi)</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>2. Giới tính sinh học của bạn là gì?</h2>
+            <input type="radio" id="female" name="gioi_tinh_sinh_hoc" value="Nữ giới" required>
+            <label for="female" class="exam-radio">Nữ giới</label><br>
+            <input type="radio" id="male" name="gioi_tinh_sinh_hoc" value="Nam giới">
+            <label for="male" class="exam-radio">Nam giới</label><br>
+            <input type="radio" id="both" name="gioi_tinh_sinh_hoc" value="Phi nhị giới">
+            <label for="both" class="exam-radio">Phi nhị giới</label><br>
+            <input type="radio" id="none" name="gioi_tinh_sinh_hoc" value="Phi giới tính">
+            <label for="none" class="exam-radio">Phi nhị giới</label><br>
+            <input type="radio" id="notshare" name="gioi_tinh_sinh_hoc" value="Không muốn chia sẻ">
+            <label for="notshare" class="exam-radio">Không muốn chia sẻ</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>3. Độ tuổi của bạn ở thời điểm hiện tại là bao nhiêu?</h2>
+            <input type="text" id="male" name="tuoi" required placeholder="Điền tại đây" style="width: 500px; height: 70px; font-size: 1.5rem; padding: 10px 20px; border-radius: 10px; text-align: center;">
+        </div>
+        <div class="question-frame">
+            <h2>4. Thiên hướng giới tính phù hợp nhất để mô tả bạn là gì?</h2>
+            <input type="radio" id="straight" name="thien_huong_gioi_tinh" value="Thẳng" required>
+            <label for="straight" class="exam-radio">Thẳng</label><br>
+            <input type="radio" id="gay" name="thien_huong_gioi_tinh" value="Đồng tính nam">
+            <label for="gay" class="exam-radio">Đồng tính nam</label><br>
+            <input type="radio" id="lesbian" name="thien_huong_gioi_tinh" value="Đồng tính nữ">
+            <label for="lesbian" class="exam-radio">Đồng tính nữ</label><br>
+            <input type="radio" id="none" name="thien_huong_gioi_tinh" value="Song tính luyến ái/Toàn tính luyến ái">
+            <label for="none" class="exam-radio">Song tính luyến ái/Toàn tính luyến ái</label><br>
+            <input type="radio" id="notshare" name="thien_huong_gioi_tinh" value="Không muốn chia sẻ">
+            <label for="notshare" class="exam-radio">Không muốn chia sẻ</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>5. Trạng thái tình cảm của bạn là gì?</h2>
+            <input type="radio" id="single" name="trang_thai_tinh_cam" value="Độc thân" required>
+            <label for="single" class="exam-radio">Độc thân</label><br>
+            <input type="radio" id="in_relationship" name="trang_thai_tinh_cam" value="Trong mối quan hệ">
+            <label for="in_relationship" class="exam-radio">Trong mối quan hệ</label><br>
+            <input type="radio" id="divorced" name="trang_thai_tinh_cam" value="Ly hôn">
+            <label for="divorced" class="exam-radio">Ly hôn</label><br>
+            <input type="radio" id="widow" name="trang_thai_tinh_cam" value="Góa phụ/Góa thê">
+            <label for="widow" class="exam-radio">Góa phụ/Góa thê</label><br>
+            <input type="radio" id="other" name="trang_thai_tinh_cam" value="Khác">
+            <label for="other" class="exam-radio">Khác</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>6. Bạn có phải người theo đạo không?</h2>
+            <input type="radio" id="yes-religion" name="theo_dao_khong" value="Có" required>
+            <label for="yes-religion" class="exam-radio">Có</label><br>
+            <input type="radio" id="no-religion" name="theo_dao_khong" value="Không">
+            <label for="no-religion" class="exam-radio">Không</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>7. Bạn đã từng trải qua trị liệu tâm lý chưa?</h2>
+            <input type="radio" id="yes-have" name="da_chua" value="Đã từng" required>
+            <label for="yes-have" class="exam-radio">Đã từng</label><br>
+            <input type="radio" id="no-have" name="da_chua" value="Chưa">
+            <label for="no-have" class="exam-radio">Chưa</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>8. Đâu là lý do đưa bạn đến đây ngày hôm nay?</h2>
+            <label for="depressed" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="depressed" name="tai_sao_den" value="Tôi đang gặp nhiều phiền muộn và chán nản">
+                Tôi đang gặp nhiều phiền muộn và chán nản
+            </label><br>
+            <label for="overwhelmed" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="overwhelmed" name="tai_sao_den" value="Tôi cảm thấy lo lắng và quá tải">
+                Tôi cảm thấy lo lắng và quá tải
+            </label><br>
+            <label for="mood" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="mood" name="tai_sao_den" value="Cảm xúc của tôi bị phụ thuộc vào chất lượng học tập/làm việc của mình">
+                Cảm xúc của tôi bị phụ thuộc vào chất lượng học tập/làm việc của mình
+            </label><br>
+            <label for="challenge" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="challenge" name="tai_sao_den" value="Tôi cần tâm sự về một thách thức đang gặp phải">
+                Tôi cần tâm sự về một thách thức đang gặp phải
+            </label><br>
+            <label for="relationship" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="relationship" name="tai_sao_den" value="Tôi gặp vấn đề với việc duy trì mối quan hệ cá nhân">
+                Tôi gặp vấn đề với việc duy trì mối quan hệ cá nhân
+            </label><br>
+            <label for="meaning" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="meaning" name="tai_sao_den" value="Tôi không tìm thấy ý nghĩa cho cuộc sống của mình">
+                Tôi không tìm thấy ý nghĩa cho cuộc sống của mình
+            </label><br>
+            <label for="loss" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="loss" name="tai_sao_den" value="Tôi đang cảm thấy đau lòng và thương tiếc sau mất mát">
+                Tôi đang cảm thấy đau lòng và thương tiếc sau mất mát
+            </label><br>
+            <label for="event" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="event" name="tai_sao_den" value="Tôi đang trải qua sự việc chấn động và đầy buồn đau">
+                Tôi đang trải qua sự việc chấn động và đầy buồn đau
+            </label><br>
+            <label for="confidence" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="confidence" name="tai_sao_den" value="Tôi muốn xây dựng lại sự tự tin">
+                Tôi muốn xây dựng lại sự tự tin
+            </label><br>
+            <label for="improve" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="improve" name="tai_sao_den" value="Tôi muốn cải thiện bản thân nhưng không biết bắt đầu từ đâu">
+                Tôi muốn cải thiện bản thân nhưng không biết bắt đầu từ đâu
+            </label><br>
+            <label for="reccommend" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="reccommend" name="tai_sao_den" value="Tôi được giới thiệu đến đây">
+                Tôi được giới thiệu đến đây
+            </label><br>
+        </div>
+        <div class="question-frame">
+            <h2>9 .Mong muốn của bạn với chuyên gia tư vấn trị liệu cho mình là một người thế nào?</h2>
+            <label for="listen" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="listen" name="bac_si_nhu_nao" value="Lắng nghe">
+                Lắng nghe
+            </label><br>
+            <label for="past" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="past" name="bac_si_nhu_nao" value="Tìm hiểu về quá khứ của tôi">
+                Tìm hiểu về quá khứ của tôi
+            </label><br>
+            <label for="skill" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="skill" name="bac_si_nhu_nao" value="Dạy tôi kỹ năng mới">
+                Dạy tôi kỹ năng mới
+            </label><br>
+            <label for="trust" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="trust" name="bac_si_nhu_nao" value="Thách thức niềm tin ban đầu của tôi">
+                Thách thức niềm tin ban đầu của tôi
+            </label><br>
+            <label for="daily" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="daily" name="bac_si_nhu_nao" value="Giao nhiệm vụ cho tôi thực hiện hàng ngày">
+                Giao nhiệm vụ cho tôi thực hiện hàng ngày
+            </label><br>
+            <label for="target" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="target" name="tai_sao_den" value="Hướng dẫn tôi lên mục tiêu">
+                Hướng dẫn tôi lên mục tiêu
+            </label><br>
+            <label for="with_me" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="with_me" name="tai_sao_den" value="Chủ động đón nhận vấn đề với tôi">
+                Chủ động đón nhận vấn đề với tôi
+            </label><br>
+            <label for="notsure" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="notsure" name="tai_sao_den" value="Tôi không chắc">
+                Tôi không chắc
+            </label><br>
+            <label for="other-reason" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="other-reason" name="tai_sao_den" value="Khác">
+                Khác
+            </label><br>
+        </div>
+        <div class="question-frame">
+            <h2>10. Bạn đánh giá thể trạng sức khỏe của mình ra sao</h2>
+            <input type="radio" id="good" name="suc_khoe" value="Tốt" required>
+            <label for="good" class="exam-radio">Tốt</label><br>
+            <input type="radio" id="average" name="suc_khoe" value="Bình thường">
+            <label for="average" class="exam-radio">Bình thường</label><br>
+            <input type="radio" id="bad" name="suc_khoe" value="Tệ">
+            <label for="bad" class="exam-radio">Tệ</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>11. Bạn đánh giá tình hình ăn uống của mình ra sao?</h2>
+            <input type="radio" id="good-eat" name="an_uong" value="Tốt" required>
+            <label for="good-eat" class="exam-radio">Tốt</label><br>
+            <input type="radio" id="average-eat" name="an_uong" value="Bình thường">
+            <label for="average-eat" class="exam-radio">Bình thường</label><br>
+            <input type="radio" id="bad-eat" name="an_uong" value="Tệ">
+            <label for="bad-eat" class="exam-radio">Tệ</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>12. Bạn có đang trải qua cảm giác đau buồn, tiếc nuối, bi thương và u uất không? </h2>
+            <input type="radio" id="yes-grief" name="dau_buon" value="Có" required>
+            <label for="yes-grief" class="exam-radio">Có</label><br>
+            <input type="radio" id="no-grief" name="dau_buon" value="Không">
+            <label for="no-grief" class="exam-radio">Không</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>13. Trong 2 tuần qua, tần suất bạn bị ảnh hưởng bởi những cảm xúc này: Không có hứng thú hay thỏa mãn khi làm mọi việc</h2>
+            <input type="radio" id="notatall-interest" name="ko_hung_thu" value="Không hề" required>
+            <label for="notatall-interest" class="exam-radio">Không hề</label><br>
+            <input type="radio" id="someday-interest" name="ko_hung_thu" value="Một số ngày">
+            <label for="someday-interest" class="exam-radio">Một số ngày</label><br>
+            <input type="radio" id="morethanhalf-interest" name="ko_hung_thu" value="Nhiều hơn nửa số ngày">
+            <label for="morethanhalf-interest" class="exam-radio">Nhiều hơn nửa số ngày</label><br>
+            <input type="radio" id="almostevery-interest" name="ko_hung_thu" value="Gần như mọi ngày">
+            <label for="almostevery-interest" class="exam-radio">Gần như mọi ngày</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>14. Trong 2 tuần qua, tần suất bạn bị ảnh hưởng bởi những cảm xúc này: Cảm thấy tệ về bản thân - cảm giác bạn là kẻ thất bại hoặc đã khiến bản thân và gia đình thất vọng</h2>
+            <input type="radio" id="notatall-feelbad" name="ban_than_te" value="Không hề" required>
+            <label for="notatall-feelbad" class="exam-radio">Không hề</label><br>
+            <input type="radio" id="someday-feelbad" name="ban_than_te" value="Một số ngày">
+            <label for="someday-feelbad" class="exam-radio">Một số ngày</label><br>
+            <input type="radio" id="morethanhalf-feelbad" name="ban_than_te" value="Nhiều hơn nửa số ngày">
+            <label for="morethanhalf-feelbad" class="exam-radio">Nhiều hơn nửa số ngày</label><br>
+            <input type="radio" id="almostevery-feelbad" name="ban_than_te" value="Gần như mọi ngày">
+            <label for="almostevery-feelbad" class="exam-radio">Gần như mọi ngày</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>15. Tập trung vào hai việc cùng một lúc, ví dụ như cùng lúc học, cùng lúc xem phim</h2>
+            <input type="radio" id="notatall-multitask" name="hai_viec_mot_luc" value="Không hề" required>
+            <label for="notatall-multitask" class="exam-radio">Không hề</label><br>
+            <input type="radio" id="someday-multitask" name="hai_viec_mot_luc" value="Một số ngày">
+            <label for="someday-multitask" class="exam-radio">Một số ngày</label><br>
+            <input type="radio" id="morethanhalf-multitask" name="hai_viec_mot_luc" value="Nhiều hơn nửa số ngày">
+            <label for="morethanhalf-multitask" class="exam-radio">Nhiều hơn nửa số ngày</label><br>
+            <input type="radio" id="almostevery-multitask" name="hai_viec_mot_luc" value="Gần như mọi ngày">
+            <label for="almostevery-multitask" class="exam-radio">Gần như mọi ngày</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>16. Có suy nghĩ bản thân nên chết đi hoặc tự làm tổn thương bản thân theo các cách khác nhau</h2>
+            <input type="radio" id="notatall-selfharm" name="tu_hai_minh" value="Không hề" required>
+            <label for="notatall-selfharm" class="exam-radio">Không hề</label><br>
+            <input type="radio" id="someday-selfharm" name="tu_hai_minh" value="Một số ngày">
+            <label for="someday-selfharm" class="exam-radio">Một số ngày</label><br>
+            <input type="radio" id="morethanhalf-selfharm" name="tu_hai_minh" value="Nhiều hơn nửa số ngày">
+            <label for="morethanhalf-selfharm" class="exam-radio">Nhiều hơn nửa số ngày</label><br>
+            <input type="radio" id="almostevery-selfharm" name="tu_hai_minh" value="Gần như mọi ngày">
+            <label for="almostevery-selfharm" class="exam-radio">Gần như mọi ngày</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>17. Mức độ khó khăn đến từ những vấn đề trên cho việc hoàn thành công việc, chăm lo việc nhà, hoặc giao lưu cùng người khác của bạn?</h2>
+            <input type="radio" id="notatall-task" name="kho_khan_lam_viec" value="Không khó khăn chút nào" required>
+            <label for="notatall-task" class="exam-radio">Không khó khăn chút nào</label><br>
+            <input type="radio" id="abit-task" name="kho_khan_lam_viec" value="Có vài điểm gây khó khăn">
+            <label for="abit-task" class="exam-radio">Có vài điểm gây khó khăn</label><br>
+            <input type="radio" id="very-task" name="kho_khan_lam_viec" value="Rất khó khăn">
+            <label for="very-task" class="exam-radio">Rất khó khăn</label><br>
+            <input type="radio" id="extreme-task" name="kho_khan_lam_viec" value="Khó khăn đến không thể hoàn thành">
+            <label for="extreme-task" class="exam-radio">Khó khăn đến không thể hoàn thành</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>18. Bạn có vấn đề hoặc lo lắng về sự thân mật?</h2>
+            <input type="radio" id="have-intimacy" name="than_mat" value="Đã từng" required>
+            <label for="have-intimacy" class="exam-radio">Đã từng</label><br>
+            <input type="radio" id="no-intimacy" name="than_mat" value="Chưa">
+            <label for="no-intimacy" class="exam-radio">Chưa</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>19. Bạn có thường xuyên uống đồ có cồn?</h2>
+            <input type="radio" id="never-alcohol" name="uong_do_co_con" value="Không bao giờ" required>
+            <label for="never-alcohol" class="exam-radio">Không bao giờ</label><br>
+            <input type="radio" id="rarely-alcohol" name="uong_do_co_con" value="Hiếm khi xảy ra">
+            <label for="rarely-alcohol" class="exam-radio">Hiếm khi xảy ra</label><br>
+            <input type="radio" id="monthly-alcohol" name="uong_do_co_con" value="Hàng tháng">
+            <label for="monthly-alcohol" class="exam-radio">Hàng tháng</label><br>
+            <input type="radio" id="weekly-alcohol" name="uong_do_co_con" value="Hàng tuần">
+            <label for="weekly-alcohol" class="exam-radio">Hàng tuần</label><br>
+            <input type="radio" id="daily-alcohol" name="uong_do_co_con" value="Hàng ngày">
+            <label for="daily-alcohol" class="exam-radio">Hàng ngày</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>20. Đâu là lần cuối bạn nghĩ tới việc tự tử?</h2>
+            <input type="radio" id="never-suicide" name="tu_sat" value="Không bao giờ" required>
+            <label for="never-suicide" class="exam-radio">Không bao giờ</label><br>
+            <input type="radio" id="ayear-suicide" name="tu_sat" value="Hơn 1 năm trước ">
+            <label for="ayear-suicide" class="exam-radio">Hơn 1 năm trước </label><br>
+            <input type="radio" id="threemonth-suicide" name="tu_sat" value="Hơn 3 tháng trước">
+            <label for="threemonth-suicide" class="exam-radio">Hơn 3 tháng trước</label><br>
+            <input type="radio" id="amonth-suicide" name="tu_sat" value="Hơn 1 tháng trước">
+            <label for="amonth-suicide" class="exam-radio">Hơn 1 tháng trước</label><br>
+            <input type="radio" id="twoweek-suicide" name="tu_sat" value="Hơn 2 tuần trước">
+            <label for="twoweek-suicide" class="exam-radio">Hơn 2 tuần trước</label><br>
+            <input type="radio" id="recently-suicide" name="tu_sat" value="Trong khoảng 2 tuần đổ lại">
+            <label for="recently-suicide" class="exam-radio">Trong khoảng 2 tuần đổ lại</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>21. Bạn có đang trải qua cảm giác lo lắng, cơn hoảng loạn (tim đập nhanh, choáng váng, đau bụng,...) hay ám ảnh sợ hãi?</h2>
+            <input type="radio" id="no-anxiety" name="lo_lang_hoang_loan" value="Không" required>
+            <label for="no-anxiety" class="exam-radio">Không</label><br>
+            <input type="radio" id="yes-anxiety" name="lo_lang_hoang_loan" value="Có">
+            <label for="yes-anxiety" class="exam-radio">Có</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>22. Bạn có đang trong quá trình sử dụng thuốc?</h2>
+            <input type="radio" id="no-medicine" name="su_dung_thuoc" value="Không" required>
+            <label for="no-medicine" class="exam-radio">Không</label><br>
+            <input type="radio" id="yes-medicine" name="su_dung_thuoc" value="Có">
+            <label for="yes-medicine" class="exam-radio">Có</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>23. Bạn có đang mắc phải bất kỳ tình trạng bệnh mãn tính?</h2>
+            <input type="radio" id="no-chronic" name="benh_man_tinh" value="Không" required>
+            <label for="no-chronic" class="exam-radio">Không</label><br>
+            <input type="radio" id="yes-chronic" name="benh_man_tinh" value="Có">
+            <label for="yes-chronic" class="exam-radio">Có</label><br>
+        </div>  
+        <div class="question-frame">
+            <h2>24. Bạn đánh giá mức độ tài chính cá nhân của mình ra sao?</h2>
+            <input type="radio" id="good-finance" name="tai_chinh_ca_nhan" value="Tốt" required>
+            <label for="good-finance" class="exam-radio">Tốt</label><br>
+            <input type="radio" id="average-finance" name="tai_chinh_ca_nhan" value="Bình thường">
+            <label for="average-finance" class="exam-radio">Bình thường</label><br>
+            <input type="radio" id="bad-finance" name="tai_chinh_ca_nhan" value="Tệ">
+            <label for="bad-finance" class="exam-radio">Tệ</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>25. Bạn đánh giá chất lượng giấc ngủ của mình ra sao?</h2>
+            <input type="radio" id="good-sleep" name="chat_luong_giac_ngu" value="Tốt" required>
+            <label for="good-sleep" class="exam-radio">Tốt</label><br>
+            <input type="radio" id="average-sleep" name="chat_luong_giac_ngu" value="Bình thường">
+            <label for="average-sleep" class="exam-radio">Bình thường</label><br>
+            <input type="radio" id="bad-sleep" name="chat_luong_giac_ngu" value="Tệ">
+            <label for="bad-sleep" class="exam-radio">Tệ</label><br>
+        </div>
+        <div class="question-frame">
+            <h2>26. Đâu là liệu pháp bạn mong đợi và thấy hiệu quả?</h2>
+            <label for="encourage" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="encourage" name="lieu_phap_mong_doi" value="Đội ngũ ủng hộ và khích lệ">
+                Đội ngũ ủng hộ và khích lệ
+            </label><br>
+            <label for="therapy-journal" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="therapy-journal" name="lieu_phap_mong_doi" value="Trị liệu viết nhật ký">
+                Trị liệu viết nhật ký
+            </label><br>
+            <label for="practice" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="practice" name="lieu_phap_mong_doi" value="Bài tập">
+                Bài tập
+            </label><br>
+            <label for="daily-task" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="daily-task" name="lieu_phap_mong_doi" value="Hoàn thành thói quen/mục tiêu hàng ngày">
+                Hoàn thành thói quen/mục tiêu hàng ngày
+            </label><br>
+            <label for="onl-edu" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="onl-edu" name="lieu_phap_mong_doi" value="Sự kiện trực tuyến giáo dục">
+                Sự kiện trực tuyến giáo dục
+            </label><br>
+            <label for="notsure-lieuphap" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="notsure-lieuphap" name="lieu_phap_mong_doi" value="Tôi không chắc">
+                Tôi không chắc
+            </label><br>
+            <label for="other-lieuphap" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="other-lieuphap" name="lieu_phap_mong_doi" value="Khác">
+                Khác
+            </label><br>
+        </div>
+        <div class="question-frame">
+            <h2>27. Bạn có yêu cầu đặc biệt gì về chuyên gia tâm lý?</h2>
+            <label for="therapist-male" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="therapist-male" name="yeu_cau_chuyen_gia" value="Chuyên gia giới tính nam">
+                Chuyên gia giới tính nam
+            </label><br>
+            <label for="therapist-female" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="therapist-female" name="yeu_cau_chuyen_gia" value="Chuyên gia giới tính nữ">
+                Chuyên gia giới tính nữ
+            </label><br>
+            <label for="therapist-religious" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="therapist-religious" name="yeu_cau_chuyen_gia" value="Chuyên gia theo tôn giáo">
+                Chuyên gia theo tôn giáo
+            </label><br>
+            <label for="therapist-atheist" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="therapist-atheist" name="yeu_cau_chuyen_gia" value="Chuyên gia không theo tôn giáo">
+                Chuyên gia không theo tôn giáo
+            </label><br>
+            <label for="therapist-45" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="therapist-45" name="yeu_cau_chuyen_gia" value="Chuyên gia có thâm niên và tuổi tác cao (45+)">
+                Chuyên gia có thâm niên và tuổi tác cao (45+)
+            </label><br>
+            <label for="therapist-other" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="therapist-other" name="yeu_cau_chuyen_gia" value="Khác">
+                Khác
+            </label><br>
+        </div>
+        <div class="question-frame">
+            <h2>28. Bạn biết đến HeartHeal từ đâu?</h2>
+            <input type="radio" id="facebook-know" name="sao_biet" value="Facebook" required>
+            <label for="facebook-know" class="exam-radio">Facebook</label><br>
+            <input type="radio" id="instagram-know" name="sao_biet" value="Instagram">
+            <label for="instagram-know" class="exam-radio">Instagram</label><br>
+            <input type="radio" id="linkedin-know" name="sao_biet" value="LinkedIn">
+            <label for="linkedin-know" class="exam-radio">LinkedIn</label><br>
+            <input type="radio" id="youtube-know" name="sao_biet" value="Youtube">
+            <label for="youtube-know" class="exam-radio">Youtube</label><br>
+            <input type="radio" id="tiktok-know" name="sao_biet" value="Tik Tok">
+            <label for="tiktok-know" class="exam-radio">Tik Tok</label><br>
+            <input type="radio" id="gg-know" name="sao_biet" value="Google search">
+            <label for="gg-know" class="exam-radio">Google search</label><br>
+            <input type="radio" id="celebrity-know" name="sao_biet" value="Người nổi tiếng">
+            <label for="celebrity-know" class="exam-radio">Người nổi tiếng</label><br>
+            <input type="radio" id="news-know" name="sao_biet" value="Bài báo">
+            <label for="news-know" class="exam-radio">Bài báo</label><br>
+            <input type="radio" id="other-know" name="sao_biet" value="Khác">
+            <label for="other-know" class="exam-radio">Khác</label><br>
+        </div> 
+        <div class="question-frame">
+            <h2>28. Tôi mong muốn chuyên gia hỗ trợ mình có kiến thức sâu về mảng dưới đây:</h2>
+            <label for="specialty-depression" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-depression" name="kien_ve_mang_nao" value="Trầm cảm">
+                Trầm cảm 
+            </label><br>
+            <label for="specialty-anxiety" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-anxiety" name="kien_ve_mang_nao" value="Căng thẳng và lo âu ">
+                Căng thẳng và lo âu 
+            </label><br>
+            <label for="specialty-addiction" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-addiction" name="kien_ve_mang_nao" value="Nghiện ngập">
+                Nghiện ngập
+            </label><br>
+            <label for="specialty-lgbt" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-lgbt" name="kien_ve_mang_nao" value="LGBTQ+ ">
+                LGBTQ+ 
+            </label><br>
+            <label for="specialty-relationship" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-relationship" name="kien_ve_mang_nao" value="Vấn đề trong mối quan hệ">
+                Vấn đề trong mối quan hệ 
+            </label><br>
+            <label for="specialty-family" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-familt" name="kien_ve_mang_nao" value="Xung đột gia đình">
+                Xung đột gia đình
+            </label><br>
+            <label for="specialty-abuse" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-abuse" name="kien_ve_mang_nao" value="Sang chấn và bạo hành">
+                Sang chấn và bạo hành
+            </label><br>
+            <label for="specialty-loss" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-loss" name="kien_ve_mang_nao" value="Mất mát ">
+                Mất mát 
+            </label><br>
+            <label for="specialty-eating" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-eating" name="kien_ve_mang_nao" value="Rối loạn ăn uống">
+                Rối loạn ăn uống
+            </label><br>
+            <label for="specialty-sleep" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-sleep" name="kien_ve_mang_nao" value="Rối loạn giấc ngủ">
+                Rối loạn giấc ngủ
+            </label><br>
+            <label for="specialty-self" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-self" name="kien_ve_mang_nao" value="Động lực, tự tin và yêu bản thân">
+                Động lực, tự tin và yêu bản thân
+            </label><br>
+            <label for="specialty-career" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-career" name="kien_ve_mang_nao" value="Khó khăn trong sự nghiệp">
+                Khó khăn trong sự nghiệp
+            </label><br>
+            <label for="specialty-what" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-what" name="kien_ve_mang_nao" value="Rối loạn lưỡng cực">
+                Rối loạn lưỡng cực
+            </label><br>
+            <label for="specialty-change" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-change" name="kien_ve_mang_nao" value="Đối mặt với sự thay đổi">
+                Đối mặt với sự thay đổi
+            </label><br>
+            <label for="specialty-ADHD" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-ADHD" name="kien_ve_mang_nao" value="Sự tập trung và khả năng ghi nhớ (ADHD)">
+                Sự tập trung và khả năng ghi nhớ (ADHD)
+            </label><br>
+            <label for="specialty-talk" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-talk" name="kien_ve_mang_nao" value="Vấn đề trong giao tiếp">
+                Vấn đề trong giao tiếp
+            </label><br>
+            <label for="specialty-meaning" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-meaning" name="kien_ve_mang_nao" value="Ý nghĩa cuộc sống">
+                Ý nghĩa cuộc sống
+            </label><br>
+            <label for="specialty-lonely" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-lonely" name="kien_ve_mang_nao" value="Cô độc">
+                Cô độc
+            </label><br>
+            <label for="specialty-socialize" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-socialize" name="kien_ve_mang_nao" value="Nỗi lo lắng và sợ hãi xã hội">
+                Nỗi lo lắng và sợ hãi xã hội
+            </label><br>
+            <label for="specialty-regret" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-regret" name="kien_ve_mang_nao" value="Tội lỗi và hổ thẹn">
+                Tội lỗi và hổ thẹn
+            </label><br>
+            <label for="specialty-emotion" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-emotion" name="kien_ve_mang_nao" value="Rối loạn kiểm soát cảm xúc">
+                Rối loạn kiểm soát cảm xúc
+            </label><br>
+            <label for="specialty-finance" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-finance" name="kien_ve_mang_nao" value="Vấn đề tài chính và kinh tế">
+                Vấn đề tài chính và kinh tế
+            </label><br>
+            <label for="specialty-disability" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-disability" name="kien_ve_mang_nao" value="Bệnh mãn tính và tàn tật">
+                Bệnh mãn tính và tàn tật
+            </label><br>
+            <label for="specialty-sex" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-sex" name="kien_ve_mang_nao" value="Tình dục">
+                Tình dục
+            </label><br>
+            <label for="specialty-what1" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-what1" name="kien_ve_mang_nao" value="Rối loạn nhân cách ái kỷ">
+                Rối loạn nhân cách ái kỷ
+            </label><br>
+            <label for="specialty-other" class="exam-radio">
+                <input class="form-check-input" type="checkbox" id="specialty-other" name="kien_ve_mang_nao" value="Khác">
+                Khác
+            </label><br>
+            
+            
+        </div>
+
+        <h1 style="text-align:center">Bạn đã hoàn thành tất cả câu hỏi cho việc tìm kiếm!</h1>
+        <h4 style="color: rgb(62,64,149)">Bắt đầu hành trình với HeartHeal để tiến tới một cuôc sống hạnh phúc hơn bạn nhé!</h4>
+        <br>
+        <div class="question-frame" id="signup-frame">
+            {% if error%}
+            <div class="alert alert-danger" role="alert" style="font-size: 1.3rem;">
+                {{error}}
+            </div>
+            {% endif %}
+            <!-- firstname -->
+            <div class="form-group">
+                <input type="text" name="name" value="{{values.name}}" class="form-control form-control-sm" placeholder="Tên riêng (hoặc biệt danh)">
+            </div>
+            <br>
+            <!-- email -->
+            <div class="form-group">
+                <input required type="email" name="email" id=""
+                value="{{values.email}}"
+                class=" form-control-sm form-control" placeholder="Email">
+            </div>
+            <br>
+
+            <!-- phone -->
+            <div class="form-group">
+                <input type="text" name="phone"
+                class="form-control form-control-sml"
+                value="{{values.phone}}" placeholder="Số điện thoại"
+                >
+            </div>
+            <br>
+
+
+            <!-- password -->
+            <div class="form-group">
+                <input type="password"
+                name="password1"
+                    class="form-control form-control-sm" placeholder="Mật khẩu">
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="password"
+                name="password2"
+                    class="form-control form-control-sm" placeholder="Nhập lại mật khẩu">
+            </div>
+            <br>
+
+            <!--Checkme button-->
+            <div class="form-group form-check-inline">
+                <label class="form-check-label" for="exampleCheck1">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    Tôi đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách</a>
+                </label>
+            </div>
+            <br>
+            <div class="form-group form-check-inline">
+                <label class="form-check-label" for="emai-cho-toi">
+                    <input type="checkbox" class="form-check-input" id="emai-cho-toi">
+                    Tôi đồng ý với Email cho tôi khi chuyên gia để lại lời nhắn
+                </label>
+            </div>
+            <br>
+            <div class="form-group form-check-inline">
+                <label class="form-check-label" for="emai-cho-toi1">
+                    <input type="checkbox" class="form-check-input" id="emai-cho-toi1">
+                    Tôi đồng ý với Email cho tôi khi có sự kiện, thông tin hoặc lời đề nghị mới
+                </label>
+            </div>
+            <hr>
+            <button type="submit" class="btn ">TÔI SẴN SÀNG BẮT ĐẦU</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

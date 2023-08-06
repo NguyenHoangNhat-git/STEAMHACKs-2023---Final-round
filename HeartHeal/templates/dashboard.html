@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block navend %} 
+  <li class="nav-item custom-nav-item-pill">
+    <form action="/dashboard" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="nav-link active" 
+        style="-webkit-appearance: none; -moz-appearance: none; outline: none; border: none; background: none; font-weight: bold;">
+        Đăng xuất
+    </button>
+    </form>            
+  </li>
+{% endblock %}
+
+{% block content %}
+<div class="container" style="min-height: 400px;">
+  <div id="therapist-frame">
+    <h1>CHÀO MỪNG BẠN, {{current_user.name}}</h1>
+    <br>
+    <h3>Chúng tôi rất vui khi bạn đã quyết định tin tưởng và tìm kiếm sự giúp đỡ từ chúng tôi.</h3>
+    <br>
+    {% if therapist %}
+    <h3>Tên tôi là {{therapist.name}}, người tư vấn của bạn. Tôi sẽ hỗ trợ bạn qua các bài tập, các buổi tư vấn trực tiếp (video, giọng nói hoặc văn bản) và tin nhắn.</h3>
+    <br>
+    <h3>Dưới đây, bạn sẽ thấy tất cả các công cụ khác nhau. Để bắt đầu cuộc tư vấn và truy cập vào tất cả các công cụ này, vui lòng chọn gói đăng ký phù hợp nhất với nhu cầu của bạn.</h3>
+    <br>
+    <h3>Mong sẽ có cơ hội giúp bạn trên hành trình có được một cuộc sống hạnh phúc!</h3>
+    <br>
+    <img src="/media/{{therapist.image}}" id="therapist-img">
+    <h3>{{therapist.name}}</h3>
+    <h3>Số điện thoại: {{therapist.phone}}</h3>
+    <h3>Email: {{therapist.email}}</h3>
+    <br>
+    <a href="{% url 'schedule' %}" id="bat-dau">
+      BẮT ĐẦU BUỔI THAM VẤN ĐẦU TIÊN CỦA BẠN TẠI ĐÂY
+    </a>
+    {% else %}
+    <h3>Vui lòng đợi trong khi chúng tôi sắp xếp được chuyên gia tư vấn cho bạn. Quá trình này sẽ không mất nhiều hơn 48h</h3>
+    <br>
+    {% endif %}
+  </div>
+</div>
+
+{% if therapist %}
+  <div id="control-panel">
+    <h1 class="col-lg-12">Bảng điều khiển người dùng</h1>
+    <div class="d-flex justify-content-center align-items-center">
+      <a href="{% url 'chat' %}">
+        <div class="panel">
+          <img src="{% static 'img/tro_chuyen.png' %}" class="panel-img">
+          Trò chuyện
+        </div>
+      </a>
+      <a href="{% url 'schedule' %}">
+        <div class="panel">
+          <img src="{% static 'img/lich_trinh.png' %}" class="panel-img">
+          Lịch trình
+        </div>
+      </a>
+      <a href="{% url 'journal' %}">
+        <div class="panel">
+          <img src="{% static 'img/nhat_ki.png' %}" class="panel-img">
+          Nhật ký
+        </div>
+      </a>
+    </div>
+    <div class="d-flex justify-content-center align-items-center">
+      <a href="#">
+        <div class="panel">
+          <img src="{% static 'img/bai_tap.png' %}" class="panel-img">
+          Bài tập
+        </div>
+      </a>
+      <a href="#">
+        <div class="panel">
+          <img src="{% static 'img/muc_tieu.png' %}" class="panel-img">
+          Mục tiêu
+        </div>
+      </a>
+      <a href="#">
+        <div class="panel">
+          <img src="{% static 'img/dien_dan.png' %}" class="panel-img">
+          Diễn đàn
+        </div>
+      </a>
+    </div>
+  </div>
+{% endif %}
+
+{% endblock %}
+
+
+
+

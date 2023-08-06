@@ -1,0 +1,86 @@
+body{
+    background-color: rgb(241,241,241);
+}
+
+.question-frame{
+    background-color: rgb(160,165,237);
+
+    border-radius: 10px;
+    
+    margin: 40px 0;
+    padding: 30px 40px;
+}
+.question-frame input[type='radio']{
+    display: none;
+}
+
+.question-frame input[type='radio']:checked + .exam-radio{
+    background-color: rgb(132,150,253);
+    cursor: pointer;
+}
+
+.exam-radio{
+    border-radius: 25px;
+    
+    background-color: rgb(112,120,223);
+    
+    width: 700px;
+    margin: 15px 0;
+    padding: 10px 20px;
+    
+    color: rgb(27,50,73);
+    text-align: left;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.exam-radio:hover{
+    background-color: rgb(132,150,253);
+    cursor: pointer;
+}
+#signup-frame{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#signup-frame div input[type='text'], #signup-frame div input[type='email'], #signup-frame div input[type='password']{
+    width: 700px;
+    padding: 10px 20px;
+    
+    border-radius: 15px;
+
+    font-size: 1.5rem;
+}
+#signup-frame div input[type='checkbox']{
+    margin: 5px;
+}
+
+#signup-frame div label{
+    font-size: 1.4rem;
+    color: rgb(27,50,73);
+    font-weight: bold;
+
+    width: 850px;
+    text-align: left;
+}
+
+#signup-frame div label a{
+    font-size: 1.4rem;
+    color: rgb(27,50,73);
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#signup-frame button[type='submit']{
+    background-color: rgb(87,93,173);
+
+    border: 2px solid black;
+    border-radius: 15px;
+
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+
+    padding: 10px 40px;
+}

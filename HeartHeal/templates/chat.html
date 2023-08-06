@@ -1,0 +1,61 @@
+{% extends 'base_user.html' %}
+
+{% load static %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/chat.css' %}">
+{% endblock %}
+
+{% block navend %} 
+  <li class="nav-item custom-nav-item-pill">
+    <form action="/dashboard" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="nav-link active" 
+        style="-webkit-appearance: none; -moz-appearance: none; outline: none; border: none; background: none; font-weight: bold;">
+        Đăng xuất
+    </button>
+    </form>            
+  </li>
+{% endblock %}
+
+{% block content %}
+<div class="crumb-line">
+    <a class="custom-crumb" href="{% url 'dashboard' %}">
+        Cho người dùng >
+        </a>
+    <a class="custom-crumb" href="{% url 'journal' %}">
+        Trò chuyện
+    </a>
+</div>
+
+<div id="chat">
+    <div id="chat-panel">
+        <div id="chatBox">
+            {% for message in conversation %}
+                {% if message.if_patient_send %}
+                    <div class="message" style="justify-content: flex-end;">
+                        <div class="user-message">{{message.message.content}}</div>
+                    </div>
+                {% else %}
+                    <div class="message">
+                        <div class="other-message">{{message.message.content}}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <form id="message-form" method="POST" action="{% url 'chat' %}">
+            {% csrf_token %}
+            <input name="content" class="form-control-sm form-control" placeholder="Nhập tin nhắn" required>
+            <button type="submit" class="btn btn-sm">Gửi</button>
+        </form>
+    </div>
+    <div id="info">
+        <img src="media/{{therapist.image}}" style="width: 100%; height: auto; border-radius: 50%;">
+        <h2 style="text-align: center; margin-top: 20px;">{{therapist.name}}</h2>
+        <p>Số điện thoại: {{therapist.phone}}</p>
+        <p te>Email : </p>
+        <p>{{therapist.email}}</p>
+    </div>
+</div>
+
+{% endblock %}
