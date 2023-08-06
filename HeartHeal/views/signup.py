@@ -10,7 +10,7 @@ def collect_exam(request):
     text_list.append("1. Đâu là loại hình liệu pháp điều trị bạn tìm kiếm?")
     text_list.append("-" + request.POST['lieu_phap'])
     text_list.append("2. Giới tính sinh học của bạn là gì?")
-    text_list.append("-" + request.POST['lieu_phap'])
+    text_list.append("-" + request.POST['gioi_tinh_sinh_hoc'])
     text_list.append("3. Độ tuổi của bạn ở thời điểm hiện tại là bao nhiêu?")
     text_list.append("-" + request.POST['tuoi'])
     text_list.append("4. Thiên hướng giới tính phù hợp nhất để mô tả bạn là gì?")

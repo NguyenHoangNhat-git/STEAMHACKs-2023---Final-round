@@ -3,6 +3,15 @@
     src: url(Quicksand.ttf);
 }
 
+@font-face {
+    font-family: blastine;
+    src: url(BlastineRegular.ttf);
+}
+.navbar-brand{
+    font-size: 1.3rem;
+    font-family: blastine, sans-serif;
+}
+
 *{
     box-sizing: border-box;
     font-family: quicksand, sans-serif;
