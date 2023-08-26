@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block navend %} 
+    <li class="nav-item custom-nav-item-pill">
+    <a class="nav-link active" href="{% url 'login' %}">Đăng Nhập</a>
+    </li>
+    <li class="nav-item custom-nav-item-pill">
+    <a class="nav-link active" href="{% url 'signup' %}">Bắt đầu</a>
+    </li>
+{% endblock %}
+
+{% block for_user %}
+    <div class="dropdown-content">
+        <a class="dropdown-item" href="{% url 'chat-room' %}">Trò chuyện</a>
+        <a class="dropdown-item" href="{% url 'schedule' %}">Lịch trình</a>
+        <a class="dropdown-item" href="{% url 'journal' %}">Nhật ký</a>
+        <a class="dropdown-item" href="{% url 'practice-home' %}">Bài tập</a>
+        <a class="dropdown-item" href="{% url 'goal' %}">Mục tiêu</a>
+        <a class="dropdown-item" href="{% url 'forum' %}">Diễn đàn</a>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+<h1 style="text-align: center; padding: 50px; font-size: 4rem; font-weight: bold;">
+    HEARTHEAL, nền tảng điều trị tâm lý online<br> hàng đầu tại Việt Nam
+</h1>
+<div id="shade-frame">
+    <div class="d-flex align-items-center justify-content-center">
+        <a href="#su-menh">
+            <div class="id-nav">Sứ mệnh</div>
+        </a>
+        <a href="#cau-chuyen">
+            <div class="id-nav">Câu chuyện thành công</div>
+        </a>
+        <a href="#truyen-thong">
+            <div class="id-nav">Truyền thông</div>
+        </a>
+        <a href="#doi-ngu">
+            <div class="id-nav">Đội ngũ</div>
+        </a>
+        <a href="#hop-tac">
+            <div class="id-nav">Cộng đồng và đối tác</div>
+        </a>
+    </div>
+    <div id="id-navbar-line"></div>
+
+    <div class="id-each" id="su-menh">
+        <h1>Sứ mệnh của chúng tôi</h1>
+        <p>Heartheal mong muốn tạo điều kiện cho người dân Việt Nam dễ dàng tiếp cận những buổi trị liệu tâm lý chất lượng, giá thành phải chăng, thuận tiện và an toàn bảo mật trong thời đại công nghệ số.</p>
+    </div>
+    <div class="id-each" id="tam-nhin">
+        <h1>Tầm nhìn của chúng tôi</h1>
+        <p>Bằng việc ưu tiên áp dụng đa dạng các liệu pháp trị liệu tâm lý bởi những vị chuyên gia giàu kinh nghiệm, Heartheal mong muốn đem đến cho người dùng lộ trình trị liệu cá nhân hóa, thuận tiện bổ trợ hiệu quả nhất cho hành trình chữa lành bản thân của người dùng.</p>
+    </div>
+    <div class="id-each" id="cau-chuyen">
+        <h1>Những câu chuyện thành công tại Heartheal</h1>
+        <p>Heartheal mong muốn tạo điều kiện cho người dân Việt Nam dễ dàng tiếp cận những buổi trị liệu tâm lý chất lượng, giá thành phải chăng, thuận tiện và an toàn bảo mật trong thời đại công nghệ số.</p>
+    </div>
+    <div class="id-each" id="truyen-thong">
+        <h1>Sự phủ sóng truyền thông của Heartheal</h1>
+        <p>"Nhà trị liệu tại Heartheal của tôi đã hỏi những loại câu hỏi kích thích tư duy giống như những nhà trị liệu truyền thống mà tôi đã làm việc trước đây...cô ấy đã giúp tôi xác định các tác nhân gây lo lắng và cơ chế đối phó nhanh hơn nhiều so với khi chúng tôi chỉ gặp nhau một lần một tuần."</p>
+    </div>
+    <div class="id-each" id="doi-ngu">
+        <h1>Đội ngũ của chúng tôi</h1>
+        <p>Chúng tôi là những chuyên gia đầy nhiệt huyết và giàu lòng nhân ái, được thúc đẩy bởi sứ mệnh giúp đỡ nhiều người có cuộc sống tốt hơn và hạnh phúc hơn mỗi ngày. Chúng tôi đang phát triển nhanh chóng và luôn tìm kiếm những tài năng mới. Nếu bạn yêu thích mọi người và thích thử thách - hãy đến và tham gia cùng chúng tôi! Heartheal luôn chào đón bạn!</p>
+    </div>
+    <div class="id-each" id="doi-ngu">
+        <h1>Cộng đồng và đối tác của chúng tôi</h1>
+        <p>Với mong muốn quảng bá rộng rãi cũng như tận dụng được nhiều nguồn lực cho sứ mệnh đặt ra, Heartheal rất tự hào khi có cơ hội hợp tác và hỗ trợ với các bên tổ chức, cũng như những cá nhân có tầm ảnh hưởng để mang đến điều trị tâm lý phù hợp cho tất cả mọi người.</p>
+    </div>
+</div>
+{% endblock %}
+
+

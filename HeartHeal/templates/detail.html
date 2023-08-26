@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/news_detail.css' %}">
+{% endblock %}
+
+{% block navend %} 
+    <li class="nav-item custom-nav-item-pill">
+    <a class="nav-link active" href="{% url 'login' %}">Đăng Nhập</a>
+    </li>
+    <li class="nav-item custom-nav-item-pill">
+    <a class="nav-link active" href="{% url 'signup' %}">Bắt đầu</a>
+    </li>
+{% endblock %}
+
+{% block for_user %}
+    <div class="dropdown-content">
+        <a class="dropdown-item" href="{% url 'chat-room' %}">Trò chuyện</a>
+        <a class="dropdown-item" href="{% url 'schedule' %}">Lịch trình</a>
+        <a class="dropdown-item" href="{% url 'journal' %}">Nhật ký</a>
+        <a class="dropdown-item" href="{% url 'practice-home' %}">Bài tập</a>
+        <a class="dropdown-item" href="{% url 'goal' %}">Mục tiêu</a>
+        <a class="dropdown-item" href="{% url 'forum' %}">Diễn đàn</a>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9" style="padding: 5%;">
+            <h2 style="font-weight: bold; font-size: 2.5rem;">{{detail.title}}</h2>
+            <img src="/media/{{detail.image}}" style="margin: 20px 0; width: 100%; height: auto;">
+            <div id="post-detail">
+                {{detail.detail|safe}}
+            </div>
+        </div>
+        <div class="col-lg-3" style="position: relative; padding: 5% 0;">
+            <h2>Tin tức liên quan</h2>
+            {% for related in related_news %}
+            <a href="{% url 'detail' post_id=related.id %}">
+                <div>
+                    <p style="font-weight: bold;">{{related.title}}</p>
+                    <img src="/media/{{related.image}}" style="margin: 20px 0; width: 100%;">
+                    <div id="post-detail">
+                        {{related.title}}
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

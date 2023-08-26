@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %} 
+
+{% endblock %}
+
+{% block navend %} 
+    <li class="nav-item custom-nav-item-pill">
+    <a class="nav-link active" href="{% url 'login' %}">Đăng Nhập</a>
+    </li>
+    <li class="nav-item custom-nav-item-pill">
+    <a class="nav-link active" href="{% url 'signup' %}">Bắt đầu</a>
+    </li>
+{% endblock %}
+
+{% block for_user %}
+    <div class="dropdown-content">
+        <a class="dropdown-item" href="{% url 'chat-room' %}">Trò chuyện</a>
+        <a class="dropdown-item" href="{% url 'schedule' %}">Lịch trình</a>
+        <a class="dropdown-item" href="{% url 'journal' %}">Nhật ký</a>
+        <a class="dropdown-item" href="{% url 'practice-home' %}">Bài tập</a>
+        <a class="dropdown-item" href="{% url 'goal' %}">Mục tiêu</a>
+        <a class="dropdown-item" href="{% url 'forum' %}">Diễn đàn</a>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+
+<div style="text-align: center; padding: 50px 0;">
+    <h1 style="font-weight: bold;">
+        Liên hệ với chúng tôi
+    </h1>
+    <p style="font-size: 1.5rem; margin: 0 15%;">
+        Sử dụng trang đặt câu hỏi này để bày tỏ bất kì vấn đề, suy nghĩ và đánh giá của bạn với Bộ phận Chăm sóc khách hàng tại Heartheal. Hoặc bạn có thể xem trang FAQ để giải đáp nhanh một số thắc mắc đặc trưng.
+    </p>
+
+    <div class="d-flex justify-content-center align-items-start" 
+    style="padding: 5%; text-align: left;">
+        <div style="padding: 0 5%;">
+            <h1 style="font-weight: bold; margin-bottom: 30px;">Mong muốn khi liên lạc với chúng tôi:</h1>
+            <p style="font-size: 1.4rem; font-weight: bold;">- Tôi là người dùng đã đăng ký và cần sự trợ giúp</p>
+            <p style="font-size: 1.4rem; font-weight: bold;">- Tôi đang là chuyên gia tư vấn tại Heartheal và tôi cần sự trợ giúp</p>
+            <p style="font-size: 1.4rem; font-weight: bold;">- Tôi là chuyên gia tư vấn có hứng thú với việc tham gia đội ngũ Heartheal</p>
+            <p style="font-size: 1.4rem; font-weight: bold;">- Tôi có câu hỏi liên quan đến dịch vụ</p>
+            <p style="font-size: 1.4rem; font-weight: bold;">- Tôi có câu hỏi liên quan đến việc thanh toán</p>
+            <p style="font-size: 1.4rem; font-weight: bold;">- Tôi có câu hỏi liên quan đến truyền thông tại bên Heartheal</p>
+            <p style="font-size: 1.4rem; font-weight: bold;">- Tôi có câu hỏi liên quan đến vấn đề doanh nghiệp tại Heartheal</p>
+            <p style="font-size: 1.4rem; font-weight: bold;">- Tôi đang là chuyên gia tư vấn tại Heartheal và tôi có mong muốn đăng bài tại website</p>
+            <p style="font-size: 1.4rem; font-weight: bold;">- Tôi có mong muốn tham gia Affiliate tại Heartheal và cần sự trợ giúp</p>
+        </div>
+        <div style="padding: 20px 25px; border-radius: 10px; background-color: rgb(184,178,245);">
+            <p style="font-size: 1.6rem; font-weight: bold;">Heartheal</p>
+            <p style="font-size: 1.6rem; font-weight: bold;">Hà Nội, Việt Nam</p>
+
+            <u style="font-size: 1.6rem; font-weight: bold;">hearthealcontact@gmail.com</u><br>
+            <u style="font-size: 1.6rem; font-weight: bold;">Hotline: 09xxxxxxxx</u>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

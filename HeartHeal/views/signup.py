@@ -113,6 +113,7 @@ class Signup(View):
             exam = Examination(patient=user, content = mental_status)
             exam.save()
             request.session['user'] = user.id
+            request.session['role'] = user.role
             return redirect('login')
         else:
             data = {

@@ -1,0 +1,243 @@
+{% extends 'base_user.html' %}
+
+{% load static %}
+{% load comment_like %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/forum.css' %}">
+{% endblock %}
+
+{% block navend %} 
+  <li class="nav-item custom-nav-item-pill">
+    <form action="/dashboard" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="nav-link active" 
+        style="-webkit-appearance: none; -moz-appearance: none; outline: none; border: none; background: none; font-weight: bold;">
+        Đăng xuất
+    </button>
+    </form>            
+  </li>
+{% endblock %}
+
+{% block schedule %}
+    {% if current_user.role == 'patient' %}
+    <div class="dropdown-content">
+    <a class="dropdown-item" href="{% url 'schedule' %}">Đặt lịch</a>
+    <a class="dropdown-item" href="{% url 'schedule-me' %}">Buổi tư vấn của tôi</a>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="crumb-line">
+  <a class="custom-crumb" href="{% url 'dashboard' %}">
+      Cho người dùng >
+      </a>
+  <a class="custom-crumb" href="{% url 'forum' %}">
+      Diễn đàn
+  </a>
+</div>
+
+<div class="container-fluid" style="min-height: 900px;">
+  <div class="row" style="min-height: 800px;">
+    <!-- //////////////////////////   TRÁI  /////////////////////////////////// -->
+    <div class="col-lg-3">
+      <div class="custom-panel" id="favourite">
+        <a href="{% url 'forum' %}">
+          <div class="panel-category">
+            <img src="{% static 'img/new.png' %}" class="three-type-icon">
+            Bài viết mới nhất
+          </div>
+        </a>
+        <a href="{% url 'forum' category='popular_today' %}">
+          <div class="panel-category">
+            <img src="{% static 'img/hot.png' %}" class="three-type-icon">
+            Phổ biến hôm nay
+          </div>
+        </a>
+        <a href="{% url 'forum' category='my_post' %}">
+          <div class="panel-category">
+            <img src="{% static 'img/mine.png' %}" class="three-type-icon">
+            Bài viết của tôi
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!--  /////////////////////////////   GIỮA    /////////////////////////////////// -->
+    <div class="col-lg-6">
+      <!--              ĐĂNG BÀI VIẾT        -->
+      <div class="custom-panel d-flex">
+        {% if current_user.image %}
+        <img class="post-user-img" src="/media/{{post.user.image}}">
+        {% else %}
+        <div class="post-user-img">{{current_user.name|slice:"1"}}</div>
+        {% endif %}
+        <input id="upload-input-fake" class="upload-input" type="text" placeholder="Bạn đang gặp phải vấn đề gì?"/>
+        <button id="upload-btn-fake" type="button" class="btn upload-btn" data-bs-toggle="modal" data-bs-target="#upload-post-btn">
+          Đăng
+        </button>
+        <!-- Modal -->
+        <form action="{% url 'forum' %}" method="POST" enctype="multipart/form-data" class="modal fade" id="upload-post-btn" tabindex="-1" aria-labelledby="upload-post-label" aria-hidden="true">
+          {% csrf_token %}
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title" id="upload-post-label"   style="text-align: center; width: 100%;">TẠO BÀI VIẾT</h2>
+              </div>
+              <div class="modal-body">
+                <input class="upload-form-input" type="text" name="title" placeholder="Tiêu đề" required/>
+                <input class="upload-form-input" type="text" name="content" placeholder="Bạn đang gặp phải vấn đề gì?" required/>
+                <label for="upload-form-file" style="margin: 10px; font-size: 1.4rem;"> 
+                  <img src="{% static 'img/add_file_icon.png' %}" style="height: 40px;">
+                  Đăng ảnh (tùy chọn)
+                </label>
+                <input type="file" id="upload-form-file" name="upload-file" accept=".jpg, .jpeg, .png" style="display: none;">
+                <br>
+                <label for="upload-form-category" style="font-size: 1.5rem; margin: 20px 10px;">Loại</label>
+                <select name="category" id="upload-form-category" style="font-size: 1.4rem;">
+                  {% for category in categories %}
+                  <option value="{{category.name}}" style="font-size: 1.4rem;">{{category.name}}</option>
+                  {% endfor %}
+                </select>
+                <div id="upload-form-file-name"></div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="upload-btn" data-bs-dismiss="modal">Hủy</button>
+                <button type="submit" class="upload-btn">Đăng bài</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      {% for post in posts %}
+      {% with unique_id=post.id|stringformat:"s"|add:"_" %}
+      {% with unique_id|add:"title" as unique_title_id %}
+      <!-- POST -->
+      <button class="custom-panel" data-bs-toggle="modal" data-bs-target="#unique_id_{{unique_id}}">
+        <div class="post-user">
+          {% if post.image %}
+          <img class="post-img-overview" src="/media/{{post.image}}">
+          {% endif %}
+
+          <div>
+            <div class="post-title">{{post.title}}</div>
+              <div class="d-flex align-items-center" style="margin-top: 10px;">
+              {% if post.user.image %}
+              <img class="post-user-img" src="/media/{{post.user.image}}">
+              {% else %}
+              <div class="post-user-img">{{post.user.name|slice:"1"}}</div>
+              {% endif %}
+              <div style="margin-left: 20px;">
+                <div class="post-user-name">{{post.user.name}}</div>
+                <div class="post-user-timestamp">{{post.timestamp}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="post-react">
+          <div style="margin: 0 20px;">{{post|get_like_num}} Lượt thích</div>
+          <div>{{post|get_comment_num}} Bình luận</div>
+        </div>
+      </button>
+      <!-- POST MODAL -->
+      <div action="{% url 'schedule-me' %}" method="POST" class="modal fade" id="unique_id_{{unique_id}}" tabindex="-1" aria-labelledby="#{{unique_title_id}}" aria-hidden="true">
+        {% csrf_token %}            
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+          <div class="modal-content">
+            <!--            NỘI DUNG BÀI VIẾT              -->
+            <div class="modal-header">
+              {% if post.user.image %}
+              <img class="post-user-img" src="/media/{{post.user.image}}">
+              {% else %}
+              <div class="post-user-img">{{post.user.name|slice:"1"}}</div>
+              {% endif %}
+              <div style="margin-left: 20px;">
+                <div class="post-user-name">{{post.user.name}}</div>
+                <div class="post-user-timestamp">{{post.timestamp}}</div>
+              </div>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="visibility: hidden;"></button>
+            </div>
+            <div style="overflow: scroll;">
+              <div class="post-title">{{post.title}}</div>
+              <div class="post-content">{{post.content}}</div>
+              {% if post.image %}
+              <img class="post-img" src="/media/{{post.image}}">
+              {% endif %}
+
+              <!--              LIKE BÀI VIẾT       -->
+              <form action="{% url 'forum' %}" method="POST" class="d-flex" style="margin-top: 20px;">
+                {% csrf_token %}
+                {% if post|if_current_user_liked:current_user.id %}
+                  <input id="un-like" name="un_like" type="text" value="un_like" style="display: none;"/>
+                  <input id="like" class="form-check-input" name="like" type="checkbox" value="have" checked/>
+                {% else %}
+                  <input id="like" class="form-check-input" name="like" type="checkbox" value="havent"/>
+                {% endif %}
+                <label for="like" id="like-btn">
+                  <img src="{% static 'img/like.png' %}" style="width: 30px;">
+                  Thích
+                </label><br>
+                <input name="post_id" value="{{post.id}}" style="display: none;"/>
+                <button id="like-submit" type="submit" style="display: none;"></button>
+              </form>
+
+              <!--        BÌNH LUẬN        -->
+              {% with post|get_all_comment as comments %}
+              {% for comment in comments %}
+              <div class="post-comment-frame">
+                {% if comment.user.image %}
+                <img class="post-comment-img" src="/media/{{comment.user.image}}">
+                {% else %}
+                <div class="post-comment-img">{{comment.user.name|slice:"1"}}</div>
+                {% endif %}
+                <div class="post-comment-text">
+                  <div class="post-comment-name">{{comment.user.name}}</div>
+                  <div class="post-comment-content">{{comment.content}}</div>
+                </div>
+              </div>
+              {% endfor %}
+              {% endwith %}
+            </div>
+            <form class="modal-footer" action="{% url 'forum' %}" method="POST">
+              {% csrf_token %}
+              <input id="comment-input" name="comment" class="modal-body post-comment" placeholder="Bình luận"/>
+              <input name="post_id" value="{{post.id}}" style="display: none;"/>
+              <button id="comment-submit" type="submit" style="display: none;"></button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endwith %}
+      {% endwith %}
+      {% endfor %}
+    </div>
+
+    <!-- //////////////////////////     PHẢI  //////////////////// -->
+    <div class="col-lg-3">
+      <div class="custom-panel" id="category">
+        <h3 class="panel-category" style="font-weight: bold; font-size: 1.5rem;">
+          <img src="{% static 'img/category.png' %}" class="three-type-icon">
+          Danh mục
+        </h3>
+        {% for category in categories %}
+        <a href="{% url 'forum' category=category.name %}">
+          <div class="panel-category">
+            {{category.name}}
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascript %} 
+<script src="{% static 'js/forum.js' %}"></script>
+{% endblock %}
+
+

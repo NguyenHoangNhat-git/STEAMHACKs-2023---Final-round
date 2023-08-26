@@ -1,0 +1,81 @@
+{% extends 'base_user.html' %}
+
+{% load static %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/base_practice.css' %}">
+  {% block css_page %}
+  {% endblock %}
+{% endblock %}
+
+
+{% block navend %} 
+  <li class="nav-item custom-nav-item-pill">
+    <form action="/dashboard" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="nav-link active" 
+        style="-webkit-appearance: none; -moz-appearance: none; outline: none; border: none; background: none; font-weight: bold;">
+        Đăng xuất
+    </button>
+    </form>            
+  </li>
+{% endblock %}
+
+{% block schedule %}
+    {% if current_user.role == 'patient' %}
+    <div class="dropdown-content">
+    <a class="dropdown-item" href="{% url 'schedule' %}">Đặt lịch</a>
+    <a class="dropdown-item" href="{% url 'schedule-me' %}">Buổi tư vấn của tôi</a>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<ul class="nav nav-tabs" id="category-navbar">
+  {% for category in categories %}
+  <li class="nav-item">
+    <a class="nav-link" href="#">
+      {{category.name}}
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+<div id="practice-welcome">
+  <p>
+    Chào mừng bạn, <br> {{current_user.name}} !
+  </p>
+  <img src="{% static 'img/practice_home.png' %}">
+</div>
+
+{% block content_page %}
+{% endblock %}
+
+
+<div id="more-info">
+  <h2>Nhận thêm thông tin cần thiết đến email của bạn !</h2>
+  <div class="d-flex justify-content-center align-items-center">
+    <input type="text" id="info-email" placeholder="Email : ">
+    <button id="redirect-login-btn">
+      Đăng nhập
+    </button>
+  </div>
+</div>
+<div class="d-flex justify-content-center align-items-center flex-column mb-5">
+  <h1 class="font-weight-bold mb-3">
+    Nhận sự hỗ trợ và giúp đỡ cho vấn đề của riêng bạn
+  </h1>
+  <a href="{% url 'schedule' %}">
+    <div id="redirect-schedule-btn">
+      ĐẶT LỊCH VỚI CHUYÊN GIA TƯ VẤN NGAY
+    </div>
+  </a>
+  <div style="height: 3px; width: 90%; background-color: black; margin: 40px 0 10px 0;"></div>
+  <h4 style="width: 90%;">
+    Các bài tập/khóa luyện trên chỉ mang tính phổ quát, không nhất thiết phù hợp với bất kỳ nhóm người nào. Để đảm bảo tính an toàn và phù hợp tuyệt đối, bạn vui lòng thảo luận và nhận tư vấn từ bác sĩ tâm lý có trình độ và bằng cấp rõ ràng.
+  </h4>
+</div>
+{% endblock %}
+
+{% block javascript_page %}
+
+{% endblock %}

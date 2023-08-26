@@ -1,0 +1,215 @@
+{% extends 'base_user.html' %}
+
+{% load static %}
+{% load task %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/task.css' %}">
+{% endblock %}
+
+{% block navend %} 
+  <li class="nav-item custom-nav-item-pill">
+    <form action="/dashboard" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="nav-link active" 
+        style="-webkit-appearance: none; -moz-appearance: none; outline: none; border: none; background: none; font-weight: bold;">
+        Đăng xuất
+    </button>
+    </form>            
+  </li>
+{% endblock %}
+
+{% block schedule %}
+    {% if current_user.role == 'patient' %}
+    <div class="dropdown-content">
+    <a class="dropdown-item" href="{% url 'schedule' %}">Đặt lịch</a>
+    <a class="dropdown-item" href="{% url 'schedule-me' %}">Buổi tư vấn của tôi</a>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="crumb-line">
+    <a class="custom-crumb" href="{% url 'dashboard' %}">
+        Cho người dùng >
+    </a>
+    <a class="custom-crumb" href="{% url 'goal' %}">
+        Mục tiêu
+    </a>
+</div>
+
+
+<h2 style="font-weight: bold; text-align: center;">Chọn một mục tiêu để cập nhật tiến trình của bạn</h2>
+<h3 style="font-weight: bold; text-align: center;">{{today|date:'l, d/m/Y'}}</h3>
+
+<div class="w-100 d-flex justify-content-around" style="padding: 25px; margin: 10px 0; min-height: 500px;">
+    <div class="goal-panel" style="width: 35%;">
+        <h3>Ngắn hạn</h3>
+        {% for goal in short_term %}
+        <button class="goal" type="button" data-bs-toggle="modal" data-bs-target="#goal_{{goal.id}}">
+            <div class="goal-progress">
+                {% if goal|get_progress_value == 100 %}
+                <img src="{% static 'img/check.png' %}" style="object-fit: contain; width: 100%; height: 100%;">
+                {% elif goal|get_all_tasks == False %}
+                <img src="{% static 'img/question-mark.png' %}" style="object-fit: contain; width: 100%; height: 100%;">
+                {% else %}
+                {{ goal|get_progress_value }}
+                {% endif %}
+            </div>
+            <div class="goal-title">
+                {{goal.title}}
+            </div>
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="goal_{{goal.id}}" tabindex="-1" aria-labelledby="goal_title_{{goal.id}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3>{{goal.title}}</h3><br>
+                    <form action="{% url 'goal' %}" method="POST" class="d-flex align-items-start justify-content-around">
+                        {% csrf_token %}
+                        <div class="modal-progress"> 
+                            <h3>Cập nhật tiến trình của bạn</h3>
+                            <div class="progress-value">{{ goal|get_progress_value }}%</div>
+                            <div class="d-flex text-align-center justify-content-center position-relative w-100">
+                                <div class="progress">
+                                    {% with goal|get_progress_value|stringformat:"s" as percent_int %}
+                                    {% with "left: calc("|add:percent_int|add:"% - 7px" as percent_style %}
+                                    <div class="progress-bar-end" style="{{ percent_style }}"></div>
+                                    {% endwith %}
+                                    {% endwith %}
+                                </div>
+                            </div>
+                            <button class="modal-task-submit" type="submit">Lưu</button>
+                        </div>
+                        <div class="modal-tasks">
+                            <h3>Nhiệm vụ cần làm</h3>
+                            {% if goal|get_all_tasks %}
+                            {% for task in goal|get_all_tasks %}
+                            <div class="modal-task">
+                                {% if task.done == True %}
+                                <input id="task_{{task.id}}" class="modal-task-checkbox" name="task" type="checkbox" value="{{task.id}}" checked/>
+                                {% else %}
+                                <input id="task_{{task.id}}" class="modal-task-checkbox" name="task" type="checkbox" value="{{task.id}}"/>
+                                {% endif %}
+                                <label for="task_{{task.id}}" class="modal-task-label">
+                                  {{task.content}}
+                                </label><br>
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+        <!--            ADD NEW GOAL     -->
+        <button class="add-goal" data-bs-toggle="modal" data-bs-target="#add-goal">
+            <img class="add-goal-icon" src="{% static 'img/plus-solid-white.png' %}">
+        </button>
+        <!-- MODAL -->
+        <form action="{% url 'goal' %}" method="POST" class="modal fade" id="add-goal" tabindex="-1" aria-labelledby="add-goal-title" aria-hidden="true">
+            {% csrf_token %}
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+              <div class="modal-content">
+                <div class="modal-header d-flex justify-content-center">
+                    <h3 class="modal-title" id="add-goal-title">Tạo mục tiêu mới</h3>
+                  </div>
+                <div class="modal-body d-flex flex-column" id="add-task-container">
+                    <input type="text" name="add_goal_title" placeholder="Điền tiêu đề mục tiêu mới" required>
+                    <select name="add-goal-type" style="font-size: 1.4rem;" required>
+                        <option value="short_term" style="font-size: 1.4rem;">Ngắn hạn</option>
+                        <option value="long_term" style="font-size: 1.4rem;">Dài hạn</option>
+                    </select>
+                    <button type="button" id="add-task-button">Thêm nhiệm vụ</button>
+                    <button type="button" id="remove-task-button">Giảm nhiệm vụ</button>
+                    <input type="text" name="add_task" placeholder="Điền nhiệm vụ mới" required>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="font-size: 1.5rem;">Hủy</button>
+                  <button type="submit" class="btn btn-primary" style="font-size: 1.5rem; background-color: rgb(87,93,173); border: none;">Lưu</button>
+                </div>
+              </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="goal-panel" style="width: 65%;">
+        <h3>Dài hạn</h3>
+        {% for goal in long_term %}
+        <button class="goal" type="button" data-bs-toggle="modal" data-bs-target="#goal_{{goal.id}}">
+            <div class="goal-progress">
+                {% if goal|get_progress_value == 100 %}
+                <img src="{% static 'img/check.png' %}" style="object-fit: contain; width: 100%; height: 100%;">
+                {% elif goal|get_all_tasks == False %}
+                <img src="{% static 'img/question-mark.png' %}" style="object-fit: contain; width: 100%; height: 100%;">
+                {% else %}
+                {{ goal|get_progress_value }}
+                {% endif %}
+            </div>
+            <div class="goal-title">
+                {{goal.title}}
+            </div>
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="goal_{{goal.id}}" tabindex="-1" aria-labelledby="goal_title_{{goal.id}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3>{{goal.title}}</h3><br>
+                    <form action="{% url 'goal' %}" method="POST" class="d-flex align-items-start justify-content-around">
+                        {% csrf_token %}
+                        <div class="modal-progress"> 
+                            <h3>Cập nhật tiến trình của bạn</h3>
+                            <div class="progress-value">{{ goal|get_progress_value }}%</div>
+                            <div class="d-flex text-align-center justify-content-center position-relative w-100">
+                                <div class="progress">
+                                    {% with goal|get_progress_value|stringformat:"s" as percent_int %}
+                                    {% with "left: calc("|add:percent_int|add:"% - 7px" as percent_style %}
+                                    <div class="progress-bar-end" style="{{ percent_style }}"></div>
+                                    {% endwith %}
+                                    {% endwith %}
+                                </div>
+                            </div>
+                            <button class="modal-task-submit" type="submit">Lưu</button>
+                        </div>
+                        <div class="modal-tasks">
+                            <h3>Nhiệm vụ cần làm</h3>
+                            {% if goal|get_all_tasks %}
+                            {% for task in goal|get_all_tasks %}
+                            <div class="modal-task">
+                                {% if task.done == True %}
+                                <input id="task_{{task.id}}" class="modal-task-checkbox" name="task" type="checkbox" value="{{task.id}}" checked/>
+                                {% else %}
+                                <input id="task_{{task.id}}" class="modal-task-checkbox" name="task" type="checkbox" value="{{task.id}}"/>
+                                {% endif %}
+                                <label for="task_{{task.id}}" class="modal-task-label">
+                                  {{task.content}}
+                                </label><br>
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!--            ADD NEW GOAL     -->
+        <button class="add-goal" data-bs-toggle="modal" data-bs-target="#add-goal">
+            <img class="add-goal-icon" src="{% static 'img/plus-solid-white.png' %}">
+        </button>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/goal.js' %}"></script>
+{% endblock %}
+

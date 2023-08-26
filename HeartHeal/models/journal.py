@@ -1,6 +1,4 @@
 from django.db import models
-
-from django.db import models
 from .user import User
 import datetime
 
@@ -17,3 +15,9 @@ class Note(models.Model):
 
     def update(self, new_content):
         self.content = new_content
+
+    def get_note_by_user(user):
+        try:
+            return Note.objects.filter(user=user)
+        except:
+            return False

@@ -1,9 +1,5 @@
-body{
-    background-color: rgb(241,241,241);
-}
-
 #meetings-frame{
-    width: 1000px;
+    width: 100%;
     min-height: 500px;
 
     display: flex;
@@ -14,7 +10,7 @@ body{
 
 .meeting{
     width: 400px;
-    height: 300px;
+    height: 350px;
     padding: 15px 25px;
     margin: 30px;
 
@@ -36,10 +32,34 @@ body{
     font-weight: lighter;
 }
 
-.meeting a div{
+.meeting-btn{
+    padding: 10px 20px;
     background-color: rgb(87,93,173);
 
+    border: none;
+    border-radius: 10px;
+
     color: white;
+    font-family: quicksand;
     font-size: 1.4rem;
     font-weight: bold;
+}
+.meeting-btn:hover{
+    color: white;
+}
+
+/*      MODAL        */
+.modal-content{
+    min-width: fit-content;
+    padding: 10px 20px;
+}
+.modal-header{
+    min-width: 500px;
+}
+.modal-body, .modal-footer button{
+    font-size: 1.4rem;
+}
+.modal-footer button{
+    background-color: rgb(87,93,173); 
+    color: white;
 }

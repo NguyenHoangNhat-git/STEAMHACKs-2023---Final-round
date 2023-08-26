@@ -1,0 +1,109 @@
+#description{
+    padding: 30px 50px;
+
+    display: flex;
+    align-items: start;
+    justify-content: center;
+}
+#description-img{
+    width: 20%;
+    max-height: 300px;
+    
+    border-radius: 20px;
+
+    object-fit: contain;
+}
+#description-title{
+    width: 20%;
+    margin: 0 45px;
+}
+#description-title h1{
+    font-weight: bold;
+}
+#description-title p{
+    font-size: 1.4rem;
+}
+#description-title a div{
+    padding: 10px 20px;
+    background-color: rgb(160,165,237);
+
+    border: none;
+    border-radius: 10px;
+
+    color: white;
+    font-size: 1.6rem;
+    text-align: center;
+    font-weight: bold;
+}
+#description-more{
+    min-width: 30%;
+    background-color: white;
+
+    padding: 10px 20px;
+
+    border-radius: 15px;
+
+    text-align: left;
+}
+#description-more h2{
+    font-weight: bold;
+}
+#description-more p{
+    font-size: 1.4rem;
+}
+
+/*                          PRACTICE OVERVIEW                   */
+#practice-overview{
+    background-color: white;
+    padding: 60px 5%;
+}
+.practice-section-break{
+    height: 5px;
+    margin: 40px;
+    background-color: rgb(241,241,241);
+}
+#what-yll-learns{
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.what-yll-learn{
+    width: 45%;
+    margin: 30px;
+    display: flex;
+}
+.what-yll-learn img{
+    width: 70px;
+    height: 70px;
+}
+.what-yll-learn p{
+    margin-left: 20px;
+    font-size: 1.6rem;
+}
+#content-overview{
+    font-size: 1.9rem;
+}
+
+/*          MODULES              */
+#module-list{
+
+}
+.module-overview{
+    margin: 20px 0;
+    padding: 20px 30px;
+    background-color: rgb(241,241,241);
+
+    border: 2px solid rgb(198,188,251);
+}
+.module-overview h1{
+    font-weight: bold;
+}
+.module-overview h2{
+    margin-right: 20%;
+    display: inline-block;
+}
+.module-overview p{
+    font-size: 1.6rem;
+}

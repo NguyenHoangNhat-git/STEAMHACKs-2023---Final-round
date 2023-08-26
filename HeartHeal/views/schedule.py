@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 
 from django.views import View
-from django.db.models import Q
 
 from HeartHeal.models.schedule import Meeting, set_days_of_schedule, Calendar, Day
 from HeartHeal.models.user import User
@@ -10,35 +8,65 @@ from HeartHeal.models.user import User
 import datetime 
 
 def divide_month(days):
-    previous_month = []
     current_month = []
     next_month = []
+    next2_month = []
     for day in days:
         if day.date.month == days[0].date.month:
-            previous_month.append(day)
-        elif day.date.month == days[0].date.month + 1:
             current_month.append(day)
-        elif day.date.month == days[0].date.month + 2:
+        elif day.date.month == days[0].date.month + 1:
             next_month.append(day)
+        elif day.date.month == days[0].date.month + 2:
+            next2_month.append(day)
     months = []
-    months.extend([previous_month, current_month, next_month])
+    months.extend([current_month, next_month, next2_month])
     return months
 
-def schedule_me(request):
-    if ('user' not in request.session):
-        return redirect('login')
-    calendar = Calendar.objects.filter(patient=request.session['user'])[0]
+def get_meeting_days_in_calendar(calendar):
     days = Day.objects.filter(calendar=calendar)
     days_have_meeting = []
     for day in days:
         if day.meeting:
-            print("have meeting")
             days_have_meeting.append(day)
+    return days_have_meeting
 
-    data = {
-        "days" : days_have_meeting
-    }
-    return render(request, 'schedule_me.html', data)
+class Schedule_me(View):
+    def get(self, request):
+        if ('user' not in request.session):
+            return redirect('login')
+        current_user = User.get_user_by_id(request.session['user'])
+        
+        if request.session['role'] == 'doctor':
+            calendars = Calendar.get_all_patient_calendar(doctor=current_user)
+            days_have_meeting = []
+            for calendar in calendars:
+                days_have_meeting_per_patient = get_meeting_days_in_calendar(calendar)
+                days_have_meeting += days_have_meeting_per_patient
+        
+        else:
+            calendar = Calendar.get_calendar_patient(patient=current_user)
+            if not calendar:
+                return redirect('schedule')
+            days_have_meeting = get_meeting_days_in_calendar(calendar)
+
+        data = {
+            "days" : days_have_meeting,
+            'current_user': current_user
+        }
+        return render(request, 'schedule_me.html', data)
+    
+    def post(self, request):
+        if 'meeting_link' in request.POST:
+            meeting = Meeting.objects.get(id=request.POST['meeting_id'])
+            meeting.link_meeting = request.POST['meeting_link']
+            meeting.save()
+        elif 'cancel_meeting' in request.POST:
+            meeting = Meeting.objects.get(id=request.POST['meeting_id'])
+            print('deleting')
+            meeting.delete()
+        return redirect('schedule-me')
+
+
 
 class Schedule(View):
     current_month = False
@@ -47,10 +75,14 @@ class Schedule(View):
     def get(self, request):
         if ('user' not in request.session):
             return redirect('login')
-        calendar = Calendar.objects.filter(patient=request.session['user'])
+        current_user = User.get_user_by_id(request.session['user'])
+
+        if request.session['role'] == 'doctor':
+            return redirect('schedule-me')
+
+        calendar = Calendar.objects.filter(patient=current_user)
         if not calendar:
-            current_patient = User.objects.filter(id=request.session['user'])[0]
-            calendar_id = set_days_of_schedule(current_patient, current_patient.assigned_doctor)
+            calendar_id = set_days_of_schedule(current_user, current_user.assigned_doctor)
             calendar = Calendar.objects.filter(id=calendar_id)
         days = Day.objects.filter(calendar=calendar[0])
 
@@ -58,12 +90,13 @@ class Schedule(View):
         months = divide_month(days)
         data={
             'months' : months, 
-            'error': ""
+            'error': "",
+            'current_user': current_user
             }
         return render(request, "schedule.html", data)
     
     def post(self, request):
-        current_user = User.objects.filter(id=request.session['user'])[0]
+        current_user = User.get_user_by_id(request.session['user'])
 
         if "ngay" not in request.POST:
             self.error = "Vui lòng chọn ngày"

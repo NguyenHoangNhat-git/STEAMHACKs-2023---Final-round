@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/how_it_works.css' %}">
+{% endblock %}
+
+{% block navend %} 
+    <li class="nav-item custom-nav-item-pill">
+    <a class="nav-link active" href="{% url 'login' %}">Đăng Nhập</a>
+    </li>
+    <li class="nav-item custom-nav-item-pill">
+    <a class="nav-link active" href="{% url 'signup' %}">Bắt đầu</a>
+    </li>
+{% endblock %}
+
+{% block for_user %}
+    <div class="dropdown-content">
+        <a class="dropdown-item" href="{% url 'chat-room' %}">Trò chuyện</a>
+        <a class="dropdown-item" href="{% url 'schedule' %}">Lịch trình</a>
+        <a class="dropdown-item" href="{% url 'journal' %}">Nhật ký</a>
+        <a class="dropdown-item" href="{% url 'practice-home' %}">Bài tập</a>
+        <a class="dropdown-item" href="{% url 'goal' %}">Mục tiêu</a>
+        <a class="dropdown-item" href="{% url 'forum' %}">Diễn đàn</a>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+
+<div style="background-color: rgb(241,241,241);">
+    <div id="how-it-works">
+        <h1>Cách hoạt động tại Heartheal</h1>
+        <div class="row">
+            <div class="col-lg-6 d-flex flex-column align-items-center">
+                <p>Bằng việc áp dụng đa dạng các liệu pháp chữa trị phù thuộc vào đặc tính từng người bệnh cũng như chuyên môn của từng chuyên gia, Heartheal đem đến cho người dùng trải nghiệm phù hợp, hiệu quả và an toàn nhất để đối phó với vấn đề bạn đang gặp phải chỉ với một chiếc điện thoại. Hãy xem video bên cạnh và đội chúng tôi sẽ giải thích sơ lược về cách vận hành tại website Heartheal để gia tăng trải nghiệm người dùng của bạn.</p>
+                <a href="{% url 'signup' %}">
+                    <div id="how-it-works-start">Bắt đầu</div>
+                </a>
+            </div>
+            <div class="col-lg-6">
+                <video id="how-it-works-video" src="{% static 'video/' %}" controls></video>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-center" style="margin-top: 50px;">
+            <div class="page">
+                <img class="page-icon" src="{% static 'img/chuyen_gia_d.png' %}">
+                <div class="page-text">Chuyên gia</div>
+            </div>
+            <div class="page">
+                <img class="page-icon" src="{% static 'img/tro_chuyen_d.png' %}">
+                <div class="page-text">Trò chuyện</div>
+            </div>
+            <div class="page">
+                <img class="page-icon" src="{% static 'img/lich_trinh_d.png' %}">
+                <div class="page-text">Lịch trình</div>
+            </div>
+            <div class="page">
+                <img class="page-icon" src="{% static 'img/nhat_ki_d.png' %}">
+                <div class="page-text">Nhật ký</div>
+            </div>
+            <div class="page">
+                <img class="page-icon" src="{% static 'img/muc_tieu_d.png' %}">
+                <div class="page-text">Mục tiêu</div>
+            </div>
+            <div class="page">
+                <img class="page-icon" src="{% static 'img/dien_dan_d.png' %}">
+                <div class="page-text">Diễn đàn</div>
+            </div>
+            <div class="page">
+                <img class="page-icon" src="{% static 'img/bai_tap_d.png' %}">
+                <div class="page-text">Bài tập</div>
+            </div>
+            <div class="page">
+                <img class="page-icon" src="{% static 'img/bai_bao_d.png' %}">
+                <div class="page-text">Bài báo</div>
+            </div>
+        </div>
+
+        <svg style="position: absolute; left: 0; bottom: 0; width:100%;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="rgb(241,241,241)" fill-opacity="1" d="M0,128L720,256L1440,96L1440,320L720,320L0,320Z"></path>
+        </svg>
+    </div>
+
+    <!-- GIỚI THIỆU TỪNG PAGE -->
+    <div class="d-flex justify-content-center align-items-center" style="margin: 150px 0;">
+        <div class="page-overview-text">
+            <img src="{% static 'img/how_tro_chuyen.png' %}">
+            <h1>Trò chuyện</h1>
+            <p>Sau khi hoàn thành đăng kí thành viên và tìm ra được bác sĩ tâm lý phù hợp với bản thân, bạn đã có thể nhắn tin không giới hạn với vị chuyên gia tư vấn của mình để hiểu thêm về họ.</p>
+        </div>
+        <img class="page-overview-img" src="{% static 'img/chat_review.jpg' %}">
+    </div>
+    <div class="d-flex justify-content-center align-items-center" style="margin: 150px 0;">
+        <img class="page-overview-img" src="{% static 'img/chat_review.jpg' %}">
+        <div class="page-overview-text">
+            <img src="{% static 'img/how_lich_trinh.png' %}">
+            <h1>Lịch trình</h1>
+            <p>Tùy thuộc vào kiểu thành viên, mỗi tuần bạn sẽ có cơ hội trò chuyện trực tiếp với bác sĩ qua tin nhắn hoặc facetime bằng cách đặt lịch hẹn từ trước.
+                <br>Bạn có thể chọn trước lịch hẹn và bác sĩ sẽ xác nhân và gửi thông tin buổi hẹn đến cho bạn ngay khi đồng ý.
+                <br>Đây là cơ hội tuyệt vời để có thể tham vấn ý kiến trực tiếp và ngay lập tức. </p>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center" style="margin: 150px 0;">
+        <div class="page-overview-text">
+            <img src="{% static 'img/how_nhat_ky.png' %}">
+            <h1>Nhật ký</h1>
+            <p>Nhật ký hàng ngày này sẽ giúp bạn nhìn nhận lại hành trình của mình theo hướng tích cực hơn.
+                <br>Việc viết nhật ký ít nhất 10-15 phút mỗi ngày sẽ giúp bạn có cái nhìn rõ ràng hơn về cuộc sống quanh mình, từ đó, bạn sẽ nhận thấy sự khác biệt rõ rệt trong suy nghĩ và tâm trạng của mình.</p>
+            </div>
+        <img class="page-overview-img" src="{% static 'img/chat_review.jpg' %}">
+    </div>
+    <div class="d-flex justify-content-center align-items-center" style="margin: 150px 0;">
+        <img class="page-overview-img" src="{% static 'img/chat_review.jpg' %}">
+        <div class="page-overview-text">
+            <img src="{% static 'img/how_muc_tieu.png' %}">
+            <h1>Mục tiêu</h1>
+            <p>Bằng việc tự đặt ra mục tiêu hàng ngày cho bản thân, bạn sẽ nhận thấy hiệu suất làm việc và chữa trị của bản thân tăng nhanh chóng.
+                <br>Ngoài ra, bác sĩ của bạn sẽ cập nhập và đề ra mục tiêu dài hạn cho bạn đi theo trên hành trình chữa trị của mình. Từ đó thúc đẩy bạn đến gần hơn với mong muốn của bản thân và một cuộc sống hạnh phúc.</p>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center" style="margin: 150px 0;">
+        <div class="page-overview-text">
+            <img src="{% static 'img/how_hanh_trinh.png' %}">
+            <h1>Hành trình</h1>
+            <p>Cũng trong phần mục tiêu, hành trình là lộ trình dài hạn mà bác sĩ đặt ra cho bạn để làm theo mỗi ngày. 
+                <br>Lộ trình thông thường sẽ trong vài tháng và nhiệm vụ hàng ngày của bạn sẽ hiện ra lần lượt. 
+                <br>Các bác sĩ đều có chuyên môn trong việc chữa trị nên hành trình được cá nhân hóa làm ra đều chất lượng và phù hợp với từng người dùng.</p>
+            </div>
+        <img class="page-overview-img" src="{% static 'img/chat_review.jpg' %}">
+        </div>
+    <div class="d-flex justify-content-center align-items-center" style="margin: 150px 0;">
+        <img class="page-overview-img" src="{% static 'img/chat_review.jpg' %}">
+        <div class="page-overview-text">
+            <img src="{% static 'img/how_dien_dan.png' %}">
+            <h1>Diễn đàn</h1>
+            <p>Với chức năng này, bạn sẽ không cần lo lắng rằng bản thân cô đơn trên con đường chữa lành. Tại đây, các bài viết, các người dùng đều chia sẻ và bộc bạch một cách chân thật, tích cực về bản thân để cùng nhau chữa trị, theo đuổi một cuộc sống khỏe mạnh và hạnh phúc.
+                <br>Các bài viết được đăng tại đây đều được kiểm duyệt khắt khe về nội dung và chất lượng để đảm bảo không gây đả kích đến bất kỳ đối tượng người xem nào.</p>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center" style="margin: 150px 0;">
+        <div class="page-overview-text">
+            <img src="{% static 'img/how_bai_tap.png' %}">
+            <h1>Bài tập</h1>
+            <p>Với chức năng này, bạn sẽ được cung cấp không chỉ thông tin, kiến thức mà còn là các bài tập rèn luyện thể chất đi kèm để thả lỏng tâm trí lẫn cơ thể.
+                <br>Các bài tập đều được biên soạn bởi đội ngũ chuyên gia chất lượng hợp tác cùng website để mang đến dịch vụ tốt nhất cho người dùng. Tuy nhiên, để phát huy tối đa tác dụng của các bài tập, bạn nên tham vấn lộ trình rèn luyện từ bác sĩ trị liệu riêng của mình.</p>
+        </div>
+        <img class="page-overview-img" src="{% static 'img/chat_review.jpg' %}">
+    </div>
+</div>  
+{% endblock %}
+
+

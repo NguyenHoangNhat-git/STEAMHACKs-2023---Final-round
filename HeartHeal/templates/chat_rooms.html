@@ -1,0 +1,71 @@
+{% extends 'base_user.html' %}
+
+{% load static %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/chat.css' %}">
+{% endblock %}
+
+{% block navend %} 
+  <li class="nav-item custom-nav-item-pill">
+    <form action="/dashboard" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="nav-link active" 
+        style="-webkit-appearance: none; -moz-appearance: none; outline: none; border: none; background: none; font-weight: bold;">
+        Đăng xuất
+    </button>
+    </form>            
+  </li>
+{% endblock %}
+
+{% block schedule %}
+    {% if current_user.role == 'patient' %}
+    <div class="dropdown-content">
+    <a class="dropdown-item" href="{% url 'schedule' %}">Đặt lịch</a>
+    <a class="dropdown-item" href="{% url 'schedule-me' %}">Buổi tư vấn của tôi</a>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="crumb-line">
+    <a class="custom-crumb" href="{% url 'dashboard' %}">
+        Cho người dùng >
+        </a>
+    <a class="custom-crumb" href="{% url 'journal' %}">
+        Trò chuyện
+    </a>
+</div>
+
+<div id="chat">
+    <div id="other-patients">
+        {% for patient in patients %}
+            <form action="{% url 'chat-room' %}" method="POST">
+                {% csrf_token %}
+                <input type="text" name="patient" id="" value="{{patient.id}}" style="display: none;">
+                <button type="submit" class="btn patient-btn">
+                    {{patient.name}}
+                </button>
+            </form>
+        {% endfor %}
+    </div>
+    <div id="chat-panel">
+      <div id="chatBox">
+          
+      </div>
+      <div id="message-form">
+          <input class="form-control-sm form-control" placeholder="Nhập tin nhắn" id="chat-message-input" required>
+          <input type="button" id="chat-message-submit" value="Gửi">
+      </div>
+    </div>
+    <div id="info">
+
+    </div>
+</div>
+
+  
+{% endblock %}
+
+{% block javascript %} 
+    <!-- <script src="{% static 'js/chat_room.js' %}"></script> -->
+{% endblock %}

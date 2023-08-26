@@ -1,0 +1,78 @@
+{% extends 'base_practice.html' %}
+
+{% load static %}
+
+{% block css_page %}
+<link rel="stylesheet" href="{% static 'css/practice_detail.css' %}">
+{% endblock %}
+
+{% block content_page %}
+<div class="crumb-line">
+    <a class="custom-crumb" href="{% url 'dashboard' %}">
+      Cho người dùng >
+    </a>
+    <a class="custom-crumb" href="{% url 'practice-home' %}">
+      Bài tập >
+    </a>
+    <a class="custom-crumb" href="">
+      {{practice.title}}
+    </a>
+</div>
+
+<div id="description">
+    <img id="description-img" src="/media/{{practice.image}}">
+    <div id="description-title">
+        <h1>{{practice.title}}</h1>
+        <p>Thực hiện bởi {{practice.by}}</p>
+        <a href="{% url 'practice-start' practice_id=practice.id %}">
+            <div>
+                Tham gia ngay
+            </div>
+        </a>
+    </div>
+    <div id="description-more">
+        <h2>Khóa học</h2>
+        <p>{{practice.description}}</p>
+        <h2>Thời lượng</h2>
+        <h2>{{practice.duration}}</h2>
+    </div>
+</div>
+
+<div id="practice-overview">
+    <div class="practice-section-break"></div>
+    <h1 style="font-weight: bold; text-indent: 40px;">Bạn sẽ học được gì ?</h1>
+    <div id="what-yll-learns">
+        {% for what_yll_learn in what_yll_learns %}
+        <div class="what-yll-learn">
+            <img src="{% static 'img/check.png' %}" >
+            <p>{{what_yll_learn}}</p>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="practice-section-break"></div>
+    <h1 style="font-weight: bold; text-indent: 40px;">Có {{ modules|length }} module trong khóa học này</h1>
+    <br>
+    <div id="content-overview">
+        {{ practice.content_overview }}
+    </div><br>
+
+    <div id="module-list">
+        {% for module in modules %}
+        <div class="module-overview">
+            <h1>{{module.title}}</h1>
+            <h2>Module {{ forloop.counter }}</h2>
+            <h2>Thời lượng : {{module.duration}}</h2>
+            <p>{{module.overview}}</p>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+{% block javascript_page %}
+{% endblock %}

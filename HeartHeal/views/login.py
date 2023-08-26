@@ -20,21 +20,32 @@ class Login(View):
         user = User.get_user_by_email(email)
         error_message = None
         if user:
-            flag = check_password(password, user.password)
-            if flag:
-                request.session['user'] = user.id
+            if user.role == 'doctor':
+                if user.password == password:
+                    request.session['user'] = user.id
+                    request.session['role'] = user.role
 
-                if Login.return_url:
-                    return HttpResponseRedirect(Login.return_url)
+                    if Login.return_url:
+                        return HttpResponseRedirect(Login.return_url)
+                    else:
+                        Login.return_url = None
+                        return redirect('dashboard')
+            else :
+                flag = check_password(password, user.password)
+                if flag:
+                    request.session['user'] = user.id
+                    request.session['role'] = user.role
+
+                    if Login.return_url:
+                        return HttpResponseRedirect(Login.return_url)
+                    else:
+                        Login.return_url = None
+                        return redirect('dashboard')
                 else:
-                    Login.return_url = None
-                    return redirect('dashboard')
-            else:
-                error_message = 'Sai mật khẩu !!'
+                    error_message = 'Sai mật khẩu !!'
         else:
             error_message = "Tài khoản không tồn tại !!"
 
-        print(email, password)
         return render (request, 'login.html', {
             'error': error_message
         })

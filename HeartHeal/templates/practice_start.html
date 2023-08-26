@@ -1,0 +1,91 @@
+{% extends 'base_user.html' %}
+
+{% load static %}
+
+{% load i18n %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/practice_start.css' %}">
+{% endblock %}
+
+{% block navend %} 
+  <li class="nav-item custom-nav-item-pill">
+    <form action="/dashboard" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="nav-link active" 
+        style="-webkit-appearance: none; -moz-appearance: none; outline: none; border: none; background: none; font-weight: bold;">
+        Đăng xuất
+    </button>
+    </form>            
+  </li>
+{% endblock %}
+
+{% block schedule %}
+    {% if current_user.role == 'patient' %}
+    <div class="dropdown-content">
+    <a class="dropdown-item" href="{% url 'schedule' %}">Đặt lịch</a>
+    <a class="dropdown-item" href="{% url 'schedule-me' %}">Buổi tư vấn của tôi</a>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row" style="background-color: white;">
+  <div class="col-lg-3" id="sidebar">
+    {% for module in modules %}
+    <a href="{% url 'practice-start' practice_id=current_practice.id module_id=module.id %}">
+      <div class="sidebar-module">{{module.title}}</div>
+    </a>
+    {% endfor %}
+  </div>
+  <div class="col-lg-9" style="border-left: 1px solid black; padding: 0;">
+    <a href="{% url 'goal' %}">
+      <div id="tip-goal">
+        <h1>Hãy đặt <u>mục tiêu</u> hàng tuần</h1>
+        <p>Những người học đặt mục tiêu có khả năng hoàn thành khóa học cao hơn 75%.</p>
+        <img src="{% static 'img/need_goal.png' %}">
+      </div>
+    </a>
+
+    <div style="margin: 25px 35px;">
+      <div id="module-content">
+        <div class="slidedown" id="module-textfield">
+          <img class="slidedown-img" src="{% static 'img/document.png' %}">
+          <h3>Bài đọc</h3>
+          <img class="down-arrow" src="{% static 'img/down-arrow.png' %}">
+
+          {% if current_module.content %}
+          <div id="module-document">{{ current_module.content|safe }}</div>
+          {% else %}
+          <div id="module-document">
+            <h2>Module này không có nội dung chữ</h2>
+          </div>
+          {% endif %}
+        </div>
+
+        <div style="height: 5px; background-color: rgb(233,233,233); margin: 0 10%; margin: 20px 0;"></div>
+
+        <div class="slidedown" id="module-videofield">
+          <img class="slidedown-img" src="{% static 'img/video.png' %}">
+          <h3>Video</h3>
+          <img class="down-arrow" src="{% static 'img/down-arrow.png' %}">
+
+          {% if current_module.video %}
+          <video id="module-video" src="/media/{{current_module.video}}" controls></video>
+          {% else %}
+          <div id="module-video">
+            <h2>Module này không có video</h2>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/practice_start.js' %}"></script>
+{% endblock %}

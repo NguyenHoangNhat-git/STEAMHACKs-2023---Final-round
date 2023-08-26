@@ -1,0 +1,59 @@
+{% extends 'base_practice.html' %}
+
+{% load static %}
+
+{% block css_page %}
+<link rel="stylesheet" href="{% static 'css/practice_home.css' %}">
+{% endblock %}
+
+{% block content_page %}
+<ul class="nav" id="practice-navbar">
+    <li class="nav-item">
+        <a class="nav-link practice-active" href="#">Trang chính</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Đang thực hiện</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Đã hoàn thành</a>
+    </li>
+</ul>
+
+<h2 style="margin: 20px 80px; font-weight: 700;">
+    <img src="{% static 'img/heart.png' %}" style="width: 50px; height: 50px; display: inline-block; margin-right: 20px">
+    Khóa học phổ biến
+</h2>
+<div class="practice-list">
+    {% for practice in practices %}
+    <a href="{% url 'practice-detail' practice_id=practice.id %}">
+        <div class="practice">
+            <img class="practice-img" src="/media/{{practice.image}}">
+            <div class="practice-title">{{practice.title}}</div>
+            <div class="practice-by">Thực hiện bởi {{practice.by}}</div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+<h2 style="margin: 20px 80px; font-weight: 700;">
+    <img src="{% static 'img/wall-clock.png' %}" style="width: 50px; height: 50px; display: inline-block; margin-right: 20px;">
+    Khóa học mới nhất
+</h2>
+<div class="practice-list">
+    {% for practice in practices %}
+    <a href="{% url 'practice-detail' practice_id=practice.id %}">
+        <div class="practice">
+            <img class="practice-img" src="/media/{{practice.image}}">
+            <div class="practice-title">{{practice.title}}</div>
+            <div class="practice-by">Thực hiện bởi {{practice.by}}</div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+
+
+{% block javascript_page %}
+{% endblock %}

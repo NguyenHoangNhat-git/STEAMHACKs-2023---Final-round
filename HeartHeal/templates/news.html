@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/news.css' %}">
+{% endblock %}
+
+{% block navend %} 
+<li class="nav-item custom-nav-item-pill">
+    <form action="/dashboard" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="nav-link active" 
+        style="-webkit-appearance: none; -moz-appearance: none; outline: none; border: none; background: none; font-weight: bold;">
+        Đăng xuất
+    </button>
+    </form>            
+  </li>
+{% endblock %}
+
+{% block for_user %}
+    <div class="dropdown-content">
+        <a class="dropdown-item" href="{% url 'chat-room' %}">Trò chuyện</a>
+        <a class="dropdown-item" href="{% url 'schedule' %}">Lịch trình</a>
+        <a class="dropdown-item" href="{% url 'journal' %}">Nhật ký</a>
+        <a class="dropdown-item" href="{% url 'practice-home' %}">Bài tập</a>
+        <a class="dropdown-item" href="{% url 'goal' %}">Mục tiêu</a>
+        <a class="dropdown-item" href="{% url 'forum' %}">Diễn đàn</a>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+<h2 style="margin: 30px 50px; font-weight: bold; ">
+    Chủ đề bạn mong muốn tìm hiểu
+</h2>
+<div class="news-categories-list">
+    {% for category in categories %}
+    <div class="news-category">
+        <img src="/media/{{category.category_image}}">
+        <h2>{{category.title}}</h2>
+    </div>
+    {% endfor %}
+</div>
+
+<h2 style="font-weight: bold; margin: 30px 50px;">Bài viết mới nhất</h2>
+<div id="post-list">
+    {% for post in posts %}
+    <a href="{% url 'detail' post_id=post.id %}">
+        <div class="post">
+            <img src="/media/{{post.image}}">
+            <p>{{post.title}}</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+

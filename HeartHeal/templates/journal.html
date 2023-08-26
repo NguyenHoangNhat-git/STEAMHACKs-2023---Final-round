@@ -18,6 +18,15 @@
   </li>
 {% endblock %}
 
+{% block schedule %}
+    {% if current_user.role == 'patient' %}
+    <div class="dropdown-content">
+    <a class="dropdown-item" href="{% url 'schedule' %}">Đặt lịch</a>
+    <a class="dropdown-item" href="{% url 'schedule-me' %}">Buổi tư vấn của tôi</a>
+    </div>
+    {% endif %}
+{% endblock %}
+
 {% block content %} 
 <div class="crumb-line">
     <a class="custom-crumb" href="{% url 'dashboard' %}">

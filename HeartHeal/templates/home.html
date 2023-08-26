@@ -15,16 +15,28 @@
     </li>
 {% endblock %}
 
+{% block for_user %}
+    <div class="dropdown-content">
+        <a class="dropdown-item" href="{% url 'chat-room' %}">Trò chuyện</a>
+        <a class="dropdown-item" href="{% url 'schedule' %}">Lịch trình</a>
+        <a class="dropdown-item" href="{% url 'journal' %}">Nhật ký</a>
+        <a class="dropdown-item" href="{% url 'practice-home' %}">Bài tập</a>
+        <a class="dropdown-item" href="{% url 'goal' %}">Mục tiêu</a>
+        <a class="dropdown-item" href="{% url 'forum' %}">Diễn đàn</a>
+    </div>
+{% endblock %}
+
+
 {% block content %}
 
 <div id="welcome">
-    <div class="row" style="width: 100%; height: 100%;">
-        <img src="{% static 'img/bg-1.png' %}" class="bg-img" style="z-index: 2; width: 670px; height: 500px; right: 20%; top: 5%;">
-        <img src="{% static 'img/bg-2.png' %}" class="bg-img" style="z-index: 3; height: auto; width: 820px; right: 130px; top: -12px;">
+    <div class="d-flex" style="width: 100%; height: 100%;">
+        <img src="{% static 'img/bg-1.png' %}" class="bg-img" style="z-index: 2; width: 670px; height: 500px; right: 21%; top: 5%;">
+        <img src="{% static 'img/bg-2.png' %}" class="bg-img" style="z-index: 3; height: auto; width: 800px; right: 145px; top: -15px;">
         <img src="{% static 'img/bg-3.png' %}" class="bg-img" style="z-index: 4; right: 0; bottom: 0; width: 450px; height: 45%;">
         <img src="{% static 'img/bg-4.png' %}" class="bg-img" style="z-index: 1; top: 0; left: 0; height: 210px; margin-left: -10px;">
         <img src="{% static 'img/bg-5.png' %}" class="bg-img" style="z-index: 1; right: 0; top: 0; width: 500px; height: 55%;">
-        <img src="{% static 'img/bg-1.png' %}" class="bg-img" style="z-index: 4; width: auto; height: 180px; right: 100px; bottom: 45%;">
+        <img src="{% static 'img/bg-1.png' %}" class="bg-img" style="z-index: 2; width: auto; height: 180px; right: 100px; bottom: 45%;">
         <div class="col-lg-6 d-flex flex-column align-items-center justify-content-center" style="padding: 50px;">
             <h1>Chữa lành đứa trẻ <br> bên trong bạn</h1>
             <br>
@@ -88,13 +100,11 @@
             <img class="page-icon" src="{% static 'img/nhat_ki.png' %}">
             <div class="page-text">Nhật ký</div>
         </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-center">
         <div class="page">
             <img class="page-icon" src="{% static 'img/muc_tieu.png' %}">
             <div class="page-text">Mục tiêu</div>
-        </div>
-        <div class="page">
-            <img class="page-icon" src="{% static 'img/hanh_trinh.png' %}">
-            <div class="page-text">Hành trình</div>
         </div>
         <div class="page">
             <img class="page-icon" src="{% static 'img/dien_dan.png' %}">
@@ -178,29 +188,22 @@
 <div id="therapy">
     <div class="row">
         <div class="col-lg-4">
-            <img src="{% static 'img/how1.png' %}" style="width: 100%; height: 100%;">
+            <img src="{% static 'img/how2.png' %}" style="height: 200px; width: auto;">
         </div>
-        <div class="col-lg-8" style="text-align: right;">
-            <div class="text-dark" style="text-align: right; font-size: 2.8rem; font-weight: bold; margin-bottom: 20px;">
-                Liệu trình chữa trị dựa trên <br>kỹ thuật trị liệu khoa học
-            </div>
-            <div>
-                <div class="therapy-text">HeartHeal áp dụng đa dạng các liệu pháp chữa trị phù thuộc vào đặc tính từng người bệnh, cũng như chuyên môn của từng chuyên gia.</div>
-                <div class="therapy-text"><div class="therapy-method">Liệu pháp tâm động học</div> giúp khách hàng khám phá bản thân bằng cách tìm hiểu những tầng nghĩ vô thức của các hành động mình thực hiện, từ đó làm thay đổi cách tư duy, cảm nhận và hành xử có vấn đề của người bệnh</div>
-                <div class="therapy-text"><div class="therapy-method">Liệu pháp hành vi</div> giúp khách hàng xác định và thay đổi những hành vi tiêu cực qua việc tập trung vào vấn đề và môi trường dẫn tới hành động của họ.</div>
-                <div class="therapy-text"><div class="therapy-method">Liệu pháp nhận thức</div> giúp khách hàng khám phá dạng thức suy nghĩ của mình để loại bỏ cách suy nghĩ tiêu cực và bất ổn nhằm tránh hành động cực đoan gây ra bởi kiểu tư duy này, từ đó dẫn đến kiểu suy nghĩ và hành xử lành mạnh</div>
-                <div class="therapy-text">Nó thường được kết hợp với liệu pháp hành vi thành một liệu pháp có tên <br><div class="therapy-method">Liệu pháp nhận thức – hành vi (CBT)..</div></div>
-            </div>
+        <div class="col-lg-8 text-dark" style="text-align: center; font-size: 2.8rem; font-weight: bold; margin-bottom: 20px;">
+            Liệu trình chữa trị dựa trên kỹ thuật trị liệu khoa học
+            <div class="therapy-text" style="margin-top: 20px;">HeartHeal áp dụng đa dạng các liệu pháp chữa trị phù thuộc vào đặc tính từng người bệnh, cũng như chuyên môn của từng chuyên gia.</div>
         </div>
-        <!-- BREAK --> 
-
-        <div class="col-lg-9">
-            <div class="therapy-text"><div class="therapy-method">Liệu pháp nhân văn</div> giúp khách hàng có khả năng đạt đến những tiềm năng hoàn chỉnh nhất của bản thân nhờ nuôi dưỡng đúng cách qua việc tập trung vào công cuộc tìm kiếm ý nghĩa sống cho người bệnh.</div>
-            <br>
-            <div class="therapy-text"><div class="therapy-method">Trị liệu tích hợp</div> quan tâm đến làm sao để mang lại kết quả điều trị tốt nhất cho khách hàng của mình, nên đôi lúc chuyên gia sẽ kết hợp nhiều phương pháp tâm lý trị liệu lại với nhau, từ đó đưa đến những kỹ thuật “thiết kế riêng” để giải quyết được bất kỳ khó khăn nào mà người bệnh có thể gặp phải.</div>
+        <div class="col-lg-5" style="text-align: right;">
+            <div class="therapy-method" id="tam-dong-hoc">1. Liệu pháp tâm động học</div>
+            <div class="therapy-method" id="hanh-vi">2. Liệu pháp hành vi</div>
+            <div class="therapy-method" id="nhan-thuc">3. Liệu pháp nhận thức</div>
+            <div class="therapy-method" id="nhan-van">4. Liệu pháp nhân văn</div>
+            <div class="therapy-method" id="tich-hop">5. Trị liệu tích hợp</div>
         </div>
-        <div class="col-lg-3">
-            <img src="{% static 'img/how2.png' %}" style="width: 100%; height: 100%;">
+        <div class="col-lg-7 d-flex flex-column justify-content-start align-items-center">
+            <div id="therapy-text-content">1. Giúp khách hàng khám phá bản thân bằng cách tìm hiểu những tầng nghĩ vô thức của các hành động mình thực hiện, từ đó làm thay đổi cách tư duy, cảm nhận và hành xử có vấn đề của người bệnh</div>
+            <img src="{% static 'img/how1.png' %}" style="width: 250px; height: auto; right: 0;">
         </div>
     </div>
 </div>
@@ -229,4 +232,8 @@
 </div>
 
 
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/home.js' %}"></script>
 {% endblock %}

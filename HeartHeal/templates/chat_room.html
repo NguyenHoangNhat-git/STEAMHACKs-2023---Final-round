@@ -1,0 +1,90 @@
+{% extends 'base_user.html' %}
+
+{% load static %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'css/chat.css' %}">
+{% endblock %}
+
+{% block navend %} 
+  <li class="nav-item custom-nav-item-pill">
+    <form action="/dashboard" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="nav-link active" 
+        style="-webkit-appearance: none; -moz-appearance: none; outline: none; border: none; background: none; font-weight: bold;">
+        Đăng xuất
+    </button>
+    </form>            
+  </li>
+{% endblock %}
+
+{% block schedule %}
+    {% if current_user.role == 'patient' %}
+    <div class="dropdown-content">
+    <a class="dropdown-item" href="{% url 'schedule' %}">Đặt lịch</a>
+    <a class="dropdown-item" href="{% url 'schedule-me' %}">Buổi tư vấn của tôi</a>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="crumb-line">
+    <a class="custom-crumb" href="{% url 'dashboard' %}">
+        Cho người dùng >
+        </a>
+    <a class="custom-crumb" href="{% url 'journal' %}">
+        Trò chuyện
+    </a>
+</div>
+
+<div id="chat">
+    {% if current_user.role == 'doctor' %}
+        <div id="other-patients">
+            {% for patient in patients %}
+                <form action="{% url 'chat-room' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="patient" id="" value="{{patient.id}}" style="display: none;">
+                    <button type="submit" class="patient-btn">
+                        {{patient.name}}
+                    </button>
+                </form>
+            {% endfor %}
+        </div>
+    {% endif %}
+  <div id="chat-panel">
+    <div id="chatBox">
+        {% for tuple in messages %}
+            {% if tuple.if_user_send %}
+                <div class="message align-user-message">
+                    <div class="user-message">{{tuple.message.content}}</div>
+                </div>
+            {% else %}
+                <div class="message">
+                    <div class="other-message">{{tuple.message.content}}</div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div id="message-form">
+        <input name="content" class="form-control-sm form-control" placeholder="Nhập tin nhắn" id="chat-message-input" required>
+        <input type="button" id="chat-message-submit" value="Gửi">
+    </div>
+  </div>
+  <div id="info">
+        {% if other_person.role != 'patient' %}
+        <img src="/media/{{other_person.image}}" style="width: 100%; height: auto; border-radius: 50%;">
+        {% endif %}
+        <h2 style="text-align: center; margin-top: 20px;">{{other_person.name}}</h2>
+        <p>Số điện thoại: {{other_person.phone}}</p>
+        <p te>Email : </p>
+        <p>{{other_person.email}}</p>
+  </div>
+</div>
+    {{ room_name|json_script:"room-name" }}
+    {{ current_user_id|json_script:"current-user-id" }}
+{% endblock %}
+
+
+{% block javascript %} 
+    <script src="{% static 'js/chat_room.js' %}"></script>
+{% endblock %}

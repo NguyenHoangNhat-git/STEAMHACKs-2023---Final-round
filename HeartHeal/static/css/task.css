@@ -1,0 +1,163 @@
+button{
+    border: none;
+    background-color: inherit;
+}
+
+.goal-panel{
+    height: 700px;
+    margin: 0 25px;
+    padding: 20px 30px;
+    position: relative;
+
+    border-radius: 15px;
+
+    background-color: white;
+}
+.goal-panel h3{
+    font-weight: bold;
+}
+
+.goal{
+    margin: 15px 0;
+
+    display: flex;
+    align-items: center;
+}
+.goal-progress{
+    width: 3.2rem;
+    height:  3.2rem;
+    padding: 5px 10px;
+    
+    color: white;
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-align: center;
+}
+.goal-title{
+    min-height: 3.2rem;
+    margin-left: 10px;
+    padding: 5px 10px;
+
+    border-radius: 10px;
+
+    font-size: 1.5rem;
+}
+.goal-title, .goal-progress{
+    background-color: rgb(192,225,166);
+}
+
+/*      MODAL        */
+.modal-body, .modal-content{
+    background-color: rgb(179,136,235);
+    border-radius: 15px;
+}
+.modal-body{
+    padding: 15px 20px;
+    padding-bottom: 20px;
+
+    
+    text-align: center;
+}
+.modal-progress, .modal-tasks{
+    width: 48%;
+    /* min-height: 250px; */
+    max-height: fit-content;
+    background-color: white;
+    padding: 10px 20px;
+
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.modal-tasks{
+    align-items: start;
+}
+.modal-tasks h3{
+    width: 100%;
+    text-align: center;
+}
+.modal-task{
+    align-items: center;
+}
+/*              MODAL TASK           */
+.modal-task-checkbox{
+    width: 20px;
+    height: 20px;
+}
+.modal-task-label{
+
+    text-align: left;
+    text-indent: 5px;
+    font-size: 1.4rem;
+}
+.modal-task-submit{
+    padding: 10px 40px;
+    background-color: rgb(87,93,173);
+
+    border-radius: 30px;
+
+    color: white;
+
+    font-size: 1.5rem;
+}
+/*                      PROGRESS BAR                 */
+.progress {
+    height: 5px;
+    width: 100%;
+    background: black;
+    margin-bottom: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.progress-value {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: black;
+}
+.progress-bar-end{
+    width: 15px;
+    height: 15px;
+    background-color: rgb(87,93,173);
+    position: absolute;
+
+    left: -5px;
+
+    border-radius: 50%;
+
+    z-index: 2;
+}
+
+/*              ADD GOAL         */
+.add-goal{
+    height: 70px;
+    width: 70px;
+    background-color: rgb(142,148,242);
+    margin: 10px;
+
+    border-radius: 50%;
+
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.add-goal-icon{
+    height: 50px;
+    width: auto;
+    position: relative;
+    object-fit: fill;
+}
+/* ADD GOAL MODAL */
+#add-task-container input, #add-task-container button, #add-task-container select, #add-task-container option, #add-task-button, #remove-task-button{
+    padding: 5px 10px;
+    margin: 5px 0;
+    font-size: 1.4rem;
+}
+#add-task-button, #remove-task-button{
+    background-color: rgb(142,148,242);
+
+    font-weight: bold;
+}

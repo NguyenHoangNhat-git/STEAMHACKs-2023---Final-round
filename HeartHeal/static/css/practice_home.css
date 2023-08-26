@@ -1,0 +1,36 @@
+.practice-list{
+    height: 450px;
+    margin: 20px 40px;
+
+    display: flex;
+}
+.practice{
+    width: 400px;
+    height: 100%;
+    margin: 0 20px;
+    padding: 20px;
+
+    border: 1px solid black;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.practice-img{
+    width: 80%;
+    height: 300px;
+    border-radius: 25px;
+
+    object-fit: cover ;
+}
+.practice-title{
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+.practice-by{
+    text-align: center;
+    font-size: 1.3rem;
+}

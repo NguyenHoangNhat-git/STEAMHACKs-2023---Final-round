@@ -20,35 +20,111 @@
   </li>
 {% endblock %}
 
-{% block content %}
-<div class="crumb-line">
-  <a class="custom-crumb" href="{% url 'dashboard' %}">
-    Cho người dùng >
-  </a>
-  <a class="custom-crumb" href="{% url 'schedule' %}">
-    Lịch trình >
-  </a>
-  <a class="custom-crumb" href="{% url 'schedule-me' %}">
-    Buổi tư vấn của tôi
-  </a>
-</div>
+{% block schedule %}
+    {% if current_user.role == 'patient' %}
+    <div class="dropdown-content">
+    <a class="dropdown-item" href="{% url 'schedule' %}">Đặt lịch</a>
+    <a class="dropdown-item" href="{% url 'schedule-me' %}">Buổi tư vấn của tôi</a>
+    </div>
+    {% endif %}
+{% endblock %}
 
-<div id="meetings-frame">
-  {% for day in days %}
-    {% if day.meeting.link_meeting %}
+{% block content %}
+  {% if current_user.role == 'patient' %}
+    <div class="crumb-line">
+      <a class="custom-crumb" href="{% url 'dashboard' %}">
+        Cho người dùng >
+      </a>
+      <a class="custom-crumb" href="{% url 'schedule' %}">
+        Lịch trình >
+      </a>
+      <a class="custom-crumb" href="{% url 'schedule-me' %}">
+        Buổi tư vấn của tôi
+      </a>
+    </div>
+
+    <div id="meetings-frame">
+      {% for day in days %}
       <div class="meeting">
         {{day.calendar.doctor.name}}
         <!-- <h3>{{day.meeting.title}}</h3> -->
         <p>{{day.date}}</p>
         <p>Bắt đầu lúc : {{day.meeting.when}}h</p>
         <p>Thời gian diễn ra: {{day.meeting.duration}}</p>
-        <a href="{{day.meeting.link_meeting}}" target="_blank">
-          <div style="padding: 10px 20px;">Tham gia</div>
-        </a>
+        {% if day.meeting.link_meeting %}
+            <a class="meeting-btn" href="{{day.meeting.link_meeting}}" target="_blank">Tham gia</a>
+        {% else %}
+            <a class="meeting-btn" style="background-color: grey;" target="_blank">Đợi xác nhận</a>
+        {% endif %}
       </div>
-    {% endif %}
-  {% endfor %}
-</div>
+      {% endfor %}
+    </div>
 
+  {% else %} <!-- for therapists -->
+    <div class="crumb-line">
+      <a class="custom-crumb" href="{% url 'dashboard' %}">
+        Cho người dùng >
+      </a>
+      <a class="custom-crumb" href="{% url 'schedule' %}">
+        Lịch trình >
+      </a>
+    </div>
+
+    <div id="meetings-frame">
+      {% for day in days %}
+        <div class="meeting">
+          {{day.calendar.patient.name}}
+          <p>{{day.date}}</p>
+          <p>Bắt đầu lúc : {{day.meeting.when}}h</p>
+          <p>Thời gian diễn ra: {{day.meeting.duration}}</p>
+
+          {% if day.meeting.link_meeting %}
+            <a class="meeting-btn" href="{{day.meeting.link_meeting}}" target="_blank">Tham gia</a>
+            <form class="" action="{% url 'schedule-me' %}" method="POST" style="display: inline-block;">
+              {% csrf_token %}       
+              <input style="display: none;" value="delete" name="cancel_meeting">
+              <input name="meeting_id" value="{{day.meeting.id}}" style="display: none;" />
+              <button type="submit" style="background-color: grey; margin-top: 10px;" class="meeting-btn">Hủy</button>
+            </form>
+          {% else %}
+          
+            {% with title_str=day.date.day|stringformat:"s" month_str=day.date.month|stringformat:"s" year_str=day.date.year|stringformat:"s" %}
+              {% with day_str|add:"/"|add:month_str|add:"/"|add:year_str as unique_id %}
+                {% with unique_id|add:"_title" as unique_title_id %}
+                <button type="button" class="meeting-btn" data-bs-toggle="modal" data-bs-target="#unique_id" style="padding: 10px 20px;">
+                  Xác nhận
+                </button>
+                <form class="" action="{% url 'schedule-me' %}" method="POST" style="display: inline-block;">
+                  {% csrf_token %}       
+                  <input style="display: none;" value="delete" name="cancel_meeting">
+                  <input name="meeting_id" value="{{day.meeting.id}}" style="display: none;" />
+                  <button type="submit" style="background-color: grey; margin-top: 10px;" class="meeting-btn">Hủy</button>
+                </form>
+                <div class="modal fade" id="unique_id" tabindex="-1" aria-labelledby="unique_title_id" aria-hidden="true">     
+                  <div class="modal-dialog modal-dialog-centered">
+                    <form class="modal-content" action="{% url 'schedule-me' %}" method="POST" >
+                      {% csrf_token %}       
+                      <div class="modal-header">
+                        <h3 class="modal-title" id="unique_title_id">Thêm link cuộc họp để xác nhận</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <input name="meeting_link" class="modal-body" placeholder="Link vào đây" style="margin: 5px 10px;"/>
+                      <input name="meeting_id" value="{{day.meeting.id}}" style="display: none;" />
+                      <div class="modal-footer">
+                        <button type="submit" class="btn">Xác nhận</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                {% endwith %}
+              {% endwith %}
+            {% endwith %}
+
+          {% endif %}
+        </div>
+
+      {% endfor %}
+    </div>
+  {% endif %}
 
 {% endblock %}
