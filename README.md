@@ -1,9 +1,9 @@
-# MEMEtal-Health
-For round 3 - STEAMHacks2023
+# For round 3 - STEAMHacks2023
+Team: MEMEtal-Health
 
 
 - Tải hết các packages trong PACKAGES.text
-- Tải docker desktop, đăng nhập và chạy
+- Yêu cầu docker
 - Mở terminal chạy:
 
 ```
