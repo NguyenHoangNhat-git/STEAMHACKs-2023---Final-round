@@ -1,4 +1,4 @@
-# For round 3 - STEAMHacks2023
+# For round 2 and 3 - STEAMHacks2023
 **Team name**: MEMEtal-Health
   
 **Tributes to my teammates** : Đỗ Ngọc Mai and Lê Phan Trung Quốc (design + marketing)
